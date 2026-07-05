@@ -1,754 +1,1345 @@
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GLACIA — Climatisation & Réfrigération</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Almarai:wght@300;400;700;800&family=Marcellus&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --teal-1:#0B2622;
-    --teal-2:#123C36;
-    --teal-3:#1B4F47;
-    --brass:#C9A15A;
-    --brass-2:#B8874A;
-    --ivory:#FBF7EF;
-    --mist:#E7EEEA;
-    --ink:#1C231F;
-    --stone:#5C6B63;
-    --line: rgba(255,255,255,0.12);
-    --whatsapp:#25D366;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  html[lang="ar"] body{font-family:'Almarai', sans-serif;}
-  html[lang="fr"] body{font-family:'Jost', sans-serif;}
-  body{background:var(--ivory);color:var(--ink);overflow-x:hidden;}
-  html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] .display{font-family:'Cairo', sans-serif;}
-  html[lang="fr"] h1, html[lang="fr"] h2, html[lang="fr"] .display{font-family:'Marcellus', serif; letter-spacing:.3px;}
-  a{text-decoration:none;color:inherit;}
-  img{max-width:100%;display:block;}
-  ul{list-style:none;}
-  button{font:inherit;cursor:pointer;border:none;background:none;}
-
-  html[lang="ar"] .fr{display:none !important;}
-  html[lang="fr"] .ar{display:none !important;}
-
-  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
-  .eyebrow{
-    display:inline-flex;align-items:center;gap:8px;
-    font-family:'Cairo',sans-serif;
-    font-weight:700;font-size:12.5px;letter-spacing:1px;text-transform:uppercase;
-    color:var(--brass);
-    background:rgba(201,161,90,0.10);
-    border:1px solid rgba(201,161,90,0.30);
-    padding:8px 18px;border-radius:99px;
-  }
-  html[lang="fr"] .eyebrow{font-family:'Jost',sans-serif;letter-spacing:.6px;}
-  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--brass);}
-
-  header{
-    position:fixed;top:0;right:0;left:0;z-index:200;
-    background:rgba(11,38,34,0.90);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:14px 24px;max-width:1180px;margin:0 auto;gap:16px;
-  }
-  .brand{
-    display:flex;align-items:center;gap:10px;
-    color:#fff;font-family:'Cairo',sans-serif;font-weight:800;font-size:19px;letter-spacing:1px;
-  }
-  html[lang="fr"] .brand{font-family:'Marcellus',serif;}
-  .brand .ico{
-    width:38px;height:38px;border-radius:10px;
-    background:linear-gradient(145deg,var(--brass),var(--brass-2));
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 4px 14px rgba(201,161,90,0.35);
-    flex-shrink:0;
-  }
-  .navlinks{display:flex;gap:26px;font-size:14px;color:var(--mist);}
-  .navlinks a{transition:color .2s;}
-  .navlinks a:hover{color:var(--brass);}
-  .nav-right{display:flex;align-items:center;gap:14px;}
-
-  .lang-switch{
-    display:flex;align-items:center;background:rgba(255,255,255,0.06);
-    border:1px solid var(--line);border-radius:99px;padding:3px;position:relative;
-  }
-  .lang-switch button{
-    position:relative;z-index:2;padding:7px 15px;border-radius:99px;
-    font-family:'Cairo',sans-serif;font-weight:700;font-size:12.5px;color:var(--mist);
-    transition:color .25s;min-width:44px;
-  }
-  .lang-switch button.active{color:var(--teal-1);}
-  .lang-thumb{
-    position:absolute;top:3px;bottom:3px;width:calc(50% - 3px);
-    background:var(--brass);border-radius:99px;
-    transition:transform .3s cubic-bezier(.65,0,.35,1);
-    z-index:1;
-  }
-  html[lang="fr"] .lang-thumb{transform:translateX(-100%);}
-  html[lang="ar"] .lang-thumb{transform:translateX(0);right:3px;}
-  html[dir="ltr"] .lang-switch{flex-direction:row;}
-
-  .nav-call{
-    display:flex;align-items:center;gap:8px;
-    background:var(--brass);color:var(--teal-1);
-    font-family:'Cairo',sans-serif;font-weight:800;font-size:14px;
-    padding:10px 18px;border-radius:99px;
-    box-shadow:0 6px 18px rgba(201,161,90,0.3);
-    transition:transform .2s;
-  }
-  html[lang="fr"] .nav-call{font-family:'Jost',sans-serif;}
-  .nav-call:hover{transform:translateY(-2px);}
-  @media(max-width:900px){.navlinks{display:none;}}
-
-  .hero{
-    position:relative;
-    background:linear-gradient(180deg,var(--teal-1) 0%, var(--teal-2) 100%);
-    padding:145px 0 100px;
-    overflow:hidden;
-  }
-  .hero::before{
-    content:"";position:absolute;inset:0;
-    background-image: radial-gradient(circle at 15% 20%, rgba(201,161,90,0.10), transparent 40%),
-                       radial-gradient(circle at 85% 80%, rgba(201,161,90,0.08), transparent 45%);
-    pointer-events:none;
-  }
-  .hero-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
-    position:relative;z-index:2;
-  }
-  .hero h1{
-    color:#fff;font-size:clamp(32px,4.6vw,50px);line-height:1.28;font-weight:800;margin:20px 0 18px;
-  }
-  html[lang="fr"] .hero h1{font-weight:400;}
-  .hero h1 span{color:var(--brass);}
-  .hero p{
-    color:var(--mist);font-size:16.5px;line-height:1.9;max-width:490px;margin-bottom:32px;opacity:.85;
-  }
-  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px;}
-  .btn-primary{
-    display:inline-flex;align-items:center;gap:10px;
-    background:var(--brass);color:var(--teal-1);
-    font-family:'Cairo',sans-serif;font-weight:800;font-size:15px;
-    padding:16px 28px;border-radius:10px;
-    box-shadow:0 10px 26px rgba(201,161,90,0.35);
-    transition:transform .2s, box-shadow .2s;
-  }
-  html[lang="fr"] .btn-primary{font-family:'Jost',sans-serif;font-weight:600;}
-  .btn-primary:hover{transform:translateY(-3px);}
-  .btn-ghost{
-    display:inline-flex;align-items:center;gap:10px;
-    color:#fff;font-family:'Cairo',sans-serif;font-weight:700;font-size:15px;
-    padding:16px 26px;border-radius:10px;
-    border:1px solid rgba(255,255,255,0.25);
-    transition:background .2s, border-color .2s;
-  }
-  html[lang="fr"] .btn-ghost{font-family:'Jost',sans-serif;font-weight:500;}
-  .btn-ghost:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.45);}
-
-  .hero-stats{display:flex;gap:34px;flex-wrap:wrap;}
-  .hero-stat b{display:block;color:var(--brass);font-family:'Cairo',sans-serif;font-size:24px;font-weight:800;}
-  html[lang="fr"] .hero-stat b{font-family:'Marcellus',serif;}
-  .hero-stat span{color:var(--mist);font-size:12.5px;opacity:.75;}
-
-  .hero-visual{position:relative;}
-  .hero-frame{
-    position:relative;border-radius:22px;overflow:hidden;
-    border:1px solid rgba(201,161,90,0.35);
-    box-shadow:0 30px 70px rgba(0,0,0,0.45);
-    aspect-ratio:4/5;
-  }
-  .hero-frame img{width:100%;height:100%;object-fit:cover;}
-  .hero-frame::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(0deg, rgba(11,38,34,0.65) 0%, transparent 45%);
-  }
-  .float-card{
-    position:absolute;bottom:22px;right:-18px;left:auto;
-    background:#fff;border-radius:16px;padding:18px 22px;
-    box-shadow:0 20px 44px rgba(0,0,0,0.28);
-    display:flex;align-items:center;gap:14px;z-index:5;
-    max-width:250px;
-  }
-  html[dir="ltr"] .float-card{right:auto;left:-18px;}
-  .float-card .fc-ico{
-    width:44px;height:44px;border-radius:12px;flex-shrink:0;
-    background:linear-gradient(145deg,var(--teal-2),var(--teal-1));
-    display:flex;align-items:center;justify-content:center;
-  }
-  .float-card .fc-ico svg{width:22px;height:22px;color:var(--brass);}
-  .float-card b{display:block;font-family:'Cairo',sans-serif;font-size:15px;color:var(--ink);}
-  html[lang="fr"] .float-card b{font-family:'Marcellus',serif;}
-  .float-card span{font-size:12px;color:var(--stone);}
-  @media(max-width:900px){
-    .hero-grid{grid-template-columns:1fr;text-align:center;}
-    .hero p{margin-inline:auto;}
-    .hero-ctas, .hero-stats{justify-content:center;}
-    .hero-frame{max-width:420px;margin:0 auto;}
-    .float-card{right:8px;left:auto;}
-    html[dir="ltr"] .float-card{left:8px;right:auto;}
-  }
-
-  section{padding:100px 0;}
-  .section-head{max-width:640px;margin-bottom:56px;}
-  .section-head.center{margin-inline:auto;text-align:center;}
-  .section-head h2{
-    font-size:clamp(26px,3.2vw,36px);font-weight:800;margin:16px 0 14px;color:var(--teal-1);
-  }
-  html[lang="fr"] .section-head h2{font-weight:400;}
-  .section-head p{color:var(--stone);font-size:15.5px;line-height:1.85;}
-
-  .services{background:#fff;}
-  .service-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:30px;
-  }
-  .s-card{
-    border-radius:18px;overflow:hidden;background:var(--ivory);
-    border:1px solid var(--mist);
-    transition:transform .3s, box-shadow .3s;
-    display:flex;
-    flex-direction:column;
-  }
-  .s-card:hover{transform:translateY(-8px);box-shadow:0 24px 50px rgba(11,38,34,0.14);}
-  .s-photo{
-    position:relative;
-    height:200px;
-    overflow:hidden;
-    flex-shrink:0;
-  }
-  .s-photo img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:transform .5s;
-  }
-  .s-card:hover .s-photo img{transform:scale(1.08);}
-  .s-photo::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(0deg, rgba(11,38,34,0.55), transparent 55%);
-  }
-  .s-ico{
-    position:absolute;
-    bottom:14px;
-    left:14px;
-    width:44px;
-    height:44px;
-    border-radius:12px;
-    background:var(--brass);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 8px 18px rgba(0,0,0,0.25);
-    z-index:2;
-  }
-  html[dir="ltr"] .s-ico{left:auto;right:14px;}
-  .s-ico svg{width:22px;height:22px;color:var(--teal-1);}
-  .s-body{
-    padding:24px 24px 28px;
-    flex:1;
-    display:flex;
-    flex-direction:column;
-  }
-  .s-body h3{
-    font-family:'Cairo',sans-serif;
-    font-size:18px;
-    font-weight:700;
-    margin-bottom:10px;
-    color:var(--teal-1);
-    line-height:1.4;
-  }
-  html[lang="fr"] .s-body h3{
-    font-family:'Marcellus',serif;
-    font-weight:400;
-    font-size:19px;
-  }
-  .s-body p{
-    font-size:14.5px;
-    color:var(--stone);
-    line-height:1.9;
-    margin-bottom:0;
-  }
-  .s-body .service-list{
-    margin-top:12px;
-    padding-right:18px;
-    list-style:disc;
-  }
-  .s-body .service-list li{
-    font-size:13.5px;
-    color:var(--stone);
-    line-height:1.8;
-    margin-bottom:4px;
-  }
-  .service-area{
-    margin-top:14px;
-    padding:12px 16px;
-    background:var(--teal-1);
-    border-radius:10px;
-    color:#fff;
-    font-size:14px;
-    text-align:center;
-    font-weight:600;
-    border-right:3px solid var(--brass);
-  }
-  html[lang="fr"] .service-area{font-weight:500;}
-  .service-area .highlight{color:var(--brass);}
-  @media(max-width:860px){.service-grid{grid-template-columns:1fr 1fr;}}
-  @media(max-width:560px){.service-grid{grid-template-columns:1fr;}}
-
-  .why{background:var(--ivory);}
-  .why-grid{
-    display:grid;grid-template-columns:0.95fr 1.05fr;gap:60px;align-items:center;
-  }
-  .why-photo{
-    position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;
-    box-shadow:0 30px 60px rgba(11,38,34,0.18);
-  }
-  .why-photo img{width:100%;height:100%;object-fit:cover;}
-  .why-photo .badge-ring{
-    position:absolute;bottom:20px;right:20px;
-    background:var(--teal-1);color:#fff;
-    width:96px;height:96px;border-radius:50%;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    border:3px solid var(--brass);text-align:center;
-  }
-  html[dir="ltr"] .why-photo .badge-ring{right:auto;left:20px;}
-  .badge-ring b{font-family:'Cairo',sans-serif;font-size:20px;color:var(--brass);}
-  html[lang="fr"] .badge-ring b{font-family:'Marcellus',serif;}
-  .badge-ring span{font-size:9.5px;line-height:1.3;padding:0 8px;}
-
-  .why-list{display:flex;flex-direction:column;gap:18px;}
-  .why-item{
-    display:flex;gap:16px;align-items:flex-start;
-    padding:20px;border-radius:14px;
-    background:#fff;
-    border:1px solid var(--mist);
-    transition:border-color .25s, transform .25s;
-  }
-  .why-item:hover{border-color:var(--brass);transform:translateX(-4px);}
-  html[dir="ltr"] .why-item:hover{transform:translateX(4px);}
-  .why-num{
-    font-family:'Cairo',sans-serif;font-weight:800;font-size:14px;color:#fff;
-    background:var(--teal-1);width:36px;height:36px;flex-shrink:0;
-    border-radius:10px;display:flex;align-items:center;justify-content:center;
-  }
-  .why-item h4{font-family:'Cairo',sans-serif;font-size:16px;margin-bottom:6px;color:var(--teal-1);}
-  html[lang="fr"] .why-item h4{font-family:'Marcellus',serif;font-weight:400;font-size:17.5px;}
-  .why-item p{font-size:13.5px;color:var(--stone);line-height:1.8;}
-  @media(max-width:900px){.why-grid{grid-template-columns:1fr;}.why-photo{max-width:420px;margin:0 auto;}}
-
-  .cta-strip{
-    position:relative;padding:0;
-    background-image:linear-gradient(115deg, rgba(11,38,34,0.92), rgba(18,60,54,0.85)), url('https://images.unsplash.com/photo-1705579604902-eb832f58bf85?auto=format&fit=crop&w=1600&q=70');
-    background-size:cover;background-position:center;
-  }
-  .cta-inner{
-    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;
-    padding:64px 0;
-  }
-  .cta-inner h3{color:#fff;font-size:26px;font-weight:800;font-family:'Cairo',sans-serif;}
-  html[lang="fr"] .cta-inner h3{font-family:'Marcellus',serif;font-weight:400;}
-  .cta-inner p{color:var(--mist);font-size:14.5px;margin-top:8px;opacity:.85;}
-  .cta-call{
-    display:flex;align-items:center;gap:12px;
-    background:var(--brass);color:var(--teal-1);
-    font-family:'Cairo',sans-serif;font-weight:800;font-size:20px;
-    padding:17px 32px;border-radius:12px;
-    box-shadow:0 14px 30px rgba(0,0,0,0.28);
-    transition:transform .2s;
-    direction:ltr;
-  }
-  .cta-call:hover{transform:translateY(-3px);}
-  @media(max-width:760px){.cta-inner{text-align:center;justify-content:center;}}
-
-  .whatsapp-float{
-    position:fixed;
-    bottom:28px;
-    left:28px;
-    z-index:999;
-    background:#25D366;
-    width:64px;
-    height:64px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 8px 30px rgba(37,211,102,0.45);
-    transition:transform .3s ease, box-shadow .3s ease;
-    animation:pulse 2.5s infinite;
-  }
-  .whatsapp-float:hover{
-    transform:scale(1.12);
-    box-shadow:0 12px 40px rgba(37,211,102,0.6);
-  }
-  .whatsapp-float svg{
-    width:32px;
-    height:32px;
-    fill:#fff;
-  }
-  .whatsapp-float .tooltip{
-    position:absolute;
-    bottom:72px;
-    left:50%;
-    transform:translateX(-50%);
-    background:var(--teal-1);
-    color:#fff;
-    padding:8px 16px;
-    border-radius:8px;
-    font-size:13px;
-    white-space:nowrap;
-    opacity:0;
-    visibility:hidden;
-    transition:all .3s ease;
-    font-family:'Jost',sans-serif;
-  }
-  html[lang="ar"] .whatsapp-float .tooltip{font-family:'Cairo',sans-serif;}
-  .whatsapp-float:hover .tooltip{
-    opacity:1;
-    visibility:visible;
-    bottom:80px;
-  }
-  .whatsapp-float .tooltip::after{
-    content:'';
-    position:absolute;
-    bottom:-6px;
-    left:50%;
-    transform:translateX(-50%) rotate(45deg);
-    width:12px;
-    height:12px;
-    background:var(--teal-1);
-  }
-
-  @keyframes pulse{
-    0%{box-shadow:0 8px 30px rgba(37,211,102,0.45);}
-    50%{box-shadow:0 8px 50px rgba(37,211,102,0.7);}
-    100%{box-shadow:0 8px 30px rgba(37,211,102,0.45);}
-  }
-
-  @media(max-width:560px){
-    .whatsapp-float{
-      width:56px;
-      height:56px;
-      bottom:18px;
-      left:18px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>GLACIA — Climatisation & Réfrigération</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Almarai:wght@300;400;700;800&family=Marcellus&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --teal-1: #0B2622;
+      --teal-2: #123C36;
+      --teal-3: #1B4F47;
+      --brass: #C9A15A;
+      --brass-2: #B8874A;
+      --ivory: #FBF7EF;
+      --mist: #E7EEEA;
+      --ink: #1C231F;
+      --stone: #5C6B63;
+      --line: rgba(255, 255, 255, 0.12);
+      --whatsapp: #25D366;
     }
-    .whatsapp-float svg{width:28px;height:28px;}
-    .whatsapp-float .tooltip{display:none;}
-  }
 
-  footer{background:#08201C;color:var(--mist);padding:60px 0 26px;}
-  .foot-grid{
-    display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line);
-  }
-  .foot-brand{display:flex;align-items:center;gap:10px;color:#fff;font-family:'Cairo',sans-serif;font-weight:800;font-size:18px;margin-bottom:14px;}
-  html[lang="fr"] .foot-brand{font-family:'Marcellus',serif;}
-  .foot-brand .ico{width:36px;height:36px;border-radius:10px;background:linear-gradient(145deg,var(--brass),var(--brass-2));display:flex;align-items:center;justify-content:center;}
-  footer p{font-size:14px;line-height:1.9;max-width:340px;opacity:.75;}
-  footer h5{font-family:'Cairo',sans-serif;color:#fff;font-size:14px;margin-bottom:16px;}
-  html[lang="fr"] footer h5{font-family:'Jost',sans-serif;font-weight:600;}
-  footer ul{display:flex;flex-direction:column;gap:11px;font-size:14px;opacity:.85;}
-  footer ul a{transition:color .2s;}
-  footer ul a:hover{color:var(--brass);}
-  .foot-bottom{
-    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
-    padding-top:22px;font-size:12.5px;opacity:.6;
-  }
-  @media(max-width:760px){.foot-grid{grid-template-columns:1fr;}}
+    /* ===== RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    html[lang="ar"] body {
+      font-family: 'Almarai', sans-serif;
+    }
+    html[lang="fr"] body {
+      font-family: 'Jost', sans-serif;
+    }
+    body {
+      background: var(--ivory);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+    html[lang="ar"] h1,
+    html[lang="ar"] h2,
+    html[lang="ar"] .display {
+      font-family: 'Cairo', sans-serif;
+    }
+    html[lang="fr"] h1,
+    html[lang="fr"] h2,
+    html[lang="fr"] .display {
+      font-family: 'Marcellus', serif;
+      letter-spacing: .3px;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    ul {
+      list-style: none;
+    }
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
 
-  svg{stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;}
-  .reveal.in{opacity:1;transform:translateY(0);}
-</style>
+    /* ===== LANG ===== */
+    html[lang="ar"] .fr {
+      display: none !important;
+    }
+    html[lang="fr"] .ar {
+      display: none !important;
+    }
+
+    /* ===== UTILS ===== */
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      font-size: 12.5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--brass);
+      background: rgba(201, 161, 90, 0.10);
+      border: 1px solid rgba(201, 161, 90, 0.30);
+      padding: 8px 18px;
+      border-radius: 99px;
+    }
+    html[lang="fr"] .eyebrow {
+      font-family: 'Jost', sans-serif;
+      letter-spacing: .6px;
+    }
+    .eyebrow .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brass);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 200;
+      background: rgba(11, 38, 34, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      max-width: 1180px;
+      margin: 0 auto;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 800;
+      font-size: 19px;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+    html[lang="fr"] .brand {
+      font-family: 'Marcellus', serif;
+    }
+    .brand .ico {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, var(--brass), var(--brass-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(201, 161, 90, 0.35);
+      flex-shrink: 0;
+    }
+    .navlinks {
+      display: flex;
+      gap: 26px;
+      font-size: 14px;
+      color: var(--mist);
+    }
+    .navlinks a {
+      transition: color .2s;
+    }
+    .navlinks a:hover {
+      color: var(--brass);
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    /* ===== LANG SWITCH ===== */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      padding: 3px;
+      position: relative;
+    }
+    .lang-switch button {
+      position: relative;
+      z-index: 2;
+      padding: 7px 15px;
+      border-radius: 99px;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      font-size: 12.5px;
+      color: var(--mist);
+      transition: color .25s;
+      min-width: 44px;
+    }
+    .lang-switch button.active {
+      color: var(--teal-1);
+    }
+    .lang-thumb {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      width: calc(50% - 3px);
+      background: var(--brass);
+      border-radius: 99px;
+      transition: transform .3s cubic-bezier(.65, 0, .35, 1);
+      z-index: 1;
+    }
+    html[lang="fr"] .lang-thumb {
+      transform: translateX(-100%);
+    }
+    html[lang="ar"] .lang-thumb {
+      transform: translateX(0);
+      right: 3px;
+    }
+    html[dir="ltr"] .lang-switch {
+      flex-direction: row;
+    }
+
+    /* ===== NAV CALL ===== */
+    .nav-call {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--brass);
+      color: var(--teal-1);
+      font-family: 'Cairo', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 10px 18px;
+      border-radius: 99px;
+      box-shadow: 0 6px 18px rgba(201, 161, 90, 0.3);
+      transition: transform .2s;
+    }
+    html[lang="fr"] .nav-call {
+      font-family: 'Jost', sans-serif;
+    }
+    .nav-call:hover {
+      transform: translateY(-2px);
+    }
+    @media(max-width:900px) {
+      .navlinks {
+        display: none;
+      }
+    }
+    @media(max-width:600px) {
+      .nav-call span {
+        display: none;
+      }
+      .nav-call {
+        padding: 10px 14px;
+      }
+      .brand {
+        font-size: 16px;
+      }
+      .brand .ico {
+        width: 32px;
+        height: 32px;
+      }
+      .lang-switch button {
+        padding: 5px 10px;
+        font-size: 11px;
+        min-width: 34px;
+      }
+      .nav {
+        padding: 10px 16px;
+      }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      background: linear-gradient(180deg, var(--teal-1) 0%, var(--teal-2) 100%);
+      padding: 135px 0 80px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 15% 20%, rgba(201, 161, 90, 0.10), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(201, 161, 90, 0.08), transparent 45%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .hero h1 {
+      color: #fff;
+      font-size: clamp(28px, 4.6vw, 48px);
+      line-height: 1.28;
+      font-weight: 800;
+      margin: 20px 0 18px;
+    }
+    html[lang="fr"] .hero h1 {
+      font-weight: 400;
+    }
+    .hero h1 span {
+      color: var(--brass);
+    }
+    .hero p {
+      color: var(--mist);
+      font-size: 16px;
+      line-height: 1.9;
+      max-width: 490px;
+      margin-bottom: 32px;
+      opacity: .85;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--brass);
+      color: var(--teal-1);
+      font-family: 'Cairo', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 16px 28px;
+      border-radius: 10px;
+      box-shadow: 0 10px 26px rgba(201, 161, 90, 0.35);
+      transition: transform .2s, box-shadow .2s;
+    }
+    html[lang="fr"] .btn-primary {
+      font-family: 'Jost', sans-serif;
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 16px 26px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: background .2s, border-color .2s;
+    }
+    html[lang="fr"] .btn-ghost {
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+    }
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.45);
+    }
+    .hero-stats {
+      display: flex;
+      gap: 34px;
+      flex-wrap: wrap;
+    }
+    .hero-stat b {
+      display: block;
+      color: var(--brass);
+      font-family: 'Cairo', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+    }
+    html[lang="fr"] .hero-stat b {
+      font-family: 'Marcellus', serif;
+    }
+    .hero-stat span {
+      color: var(--mist);
+      font-size: 12.5px;
+      opacity: .75;
+    }
+
+    /* ===== HERO VISUAL ===== */
+    .hero-visual {
+      position: relative;
+    }
+    .hero-frame {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(201, 161, 90, 0.35);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+      aspect-ratio: 4/5;
+    }
+    .hero-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(11, 38, 34, 0.65) 0%, transparent 45%);
+    }
+    .float-card {
+      position: absolute;
+      bottom: 22px;
+      right: -18px;
+      left: auto;
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px 22px;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.28);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 5;
+      max-width: 250px;
+    }
+    html[dir="ltr"] .float-card {
+      right: auto;
+      left: -18px;
+    }
+    .float-card .fc-ico {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      flex-shrink: 0;
+      background: linear-gradient(145deg, var(--teal-2), var(--teal-1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .float-card .fc-ico svg {
+      width: 22px;
+      height: 22px;
+      color: var(--brass);
+    }
+    .float-card b {
+      display: block;
+      font-family: 'Cairo', sans-serif;
+      font-size: 15px;
+      color: var(--ink);
+    }
+    html[lang="fr"] .float-card b {
+      font-family: 'Marcellus', serif;
+    }
+    .float-card span {
+      font-size: 12px;
+      color: var(--stone);
+    }
+
+    /* ===== RESPONSIVE HERO ===== */
+    @media(max-width:900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero p {
+        margin-inline: auto;
+      }
+      .hero-ctas,
+      .hero-stats {
+        justify-content: center;
+      }
+      .hero-frame {
+        max-width: 420px;
+        margin: 0 auto;
+      }
+      .float-card {
+        right: 8px;
+        left: auto;
+      }
+      html[dir="ltr"] .float-card {
+        left: 8px;
+        right: auto;
+      }
+    }
+    @media(max-width:600px) {
+      .hero {
+        padding: 120px 0 60px;
+      }
+      .float-card {
+        padding: 12px 16px;
+        gap: 10px;
+        max-width: 200px;
+        bottom: 12px;
+        right: 4px;
+      }
+      html[dir="ltr"] .float-card {
+        left: 4px;
+        right: auto;
+      }
+      .float-card .fc-ico {
+        width: 36px;
+        height: 36px;
+      }
+      .float-card b {
+        font-size: 13px;
+      }
+      .float-card span {
+        font-size: 10px;
+      }
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      padding: 80px 0;
+    }
+    .section-head {
+      max-width: 640px;
+      margin-bottom: 48px;
+    }
+    .section-head.center {
+      margin-inline: auto;
+      text-align: center;
+    }
+    .section-head h2 {
+      font-size: clamp(24px, 3.2vw, 34px);
+      font-weight: 800;
+      margin: 16px 0 14px;
+      color: var(--teal-1);
+    }
+    html[lang="fr"] .section-head h2 {
+      font-weight: 400;
+    }
+    .section-head p {
+      color: var(--stone);
+      font-size: 15.5px;
+      line-height: 1.85;
+    }
+
+    /* ===== SERVICES ===== */
+    .services {
+      background: #fff;
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .s-card {
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--ivory);
+      border: 1px solid var(--mist);
+      transition: transform .3s, box-shadow .3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .s-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 50px rgba(11, 38, 34, 0.14);
+    }
+    .s-photo {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .s-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s;
+    }
+    .s-card:hover .s-photo img {
+      transform: scale(1.08);
+    }
+    .s-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(11, 38, 34, 0.55), transparent 55%);
+    }
+    .s-ico {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--brass);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+      z-index: 2;
+    }
+    html[dir="ltr"] .s-ico {
+      left: auto;
+      right: 14px;
+    }
+    .s-ico svg {
+      width: 22px;
+      height: 22px;
+      color: var(--teal-1);
+    }
+    .s-body {
+      padding: 24px 24px 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .s-body h3 {
+      font-family: 'Cairo', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--teal-1);
+      line-height: 1.4;
+    }
+    html[lang="fr"] .s-body h3 {
+      font-family: 'Marcellus', serif;
+      font-weight: 400;
+      font-size: 19px;
+    }
+    .s-body p {
+      font-size: 14.5px;
+      color: var(--stone);
+      line-height: 1.9;
+      margin-bottom: 0;
+    }
+    .s-body .service-list {
+      margin-top: 12px;
+      padding-right: 18px;
+      list-style: disc;
+    }
+    .s-body .service-list li {
+      font-size: 13.5px;
+      color: var(--stone);
+      line-height: 1.8;
+      margin-bottom: 4px;
+    }
+    .service-area {
+      margin-top: 14px;
+      padding: 12px 16px;
+      background: var(--teal-1);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+      text-align: center;
+      font-weight: 600;
+      border-right: 3px solid var(--brass);
+    }
+    html[lang="fr"] .service-area {
+      font-weight: 500;
+    }
+    .service-area .highlight {
+      color: var(--brass);
+    }
+    @media(max-width:860px) {
+      .service-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media(max-width:560px) {
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+      .s-photo {
+        height: 170px;
+      }
+    }
+
+    /* ===== WHY ===== */
+    .why {
+      background: var(--ivory);
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .why-photo {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      box-shadow: 0 30px 60px rgba(11, 38, 34, 0.18);
+    }
+    .why-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .why-photo .badge-ring {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: var(--teal-1);
+      color: #fff;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--brass);
+      text-align: center;
+    }
+    html[dir="ltr"] .why-photo .badge-ring {
+      right: auto;
+      left: 20px;
+    }
+    .badge-ring b {
+      font-family: 'Cairo', sans-serif;
+      font-size: 20px;
+      color: var(--brass);
+    }
+    html[lang="fr"] .badge-ring b {
+      font-family: 'Marcellus', serif;
+    }
+    .badge-ring span {
+      font-size: 9.5px;
+      line-height: 1.3;
+      padding: 0 8px;
+    }
+    .why-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .why-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 20px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid var(--mist);
+      transition: border-color .25s, transform .25s;
+    }
+    .why-item:hover {
+      border-color: var(--brass);
+      transform: translateX(-4px);
+    }
+    html[dir="ltr"] .why-item:hover {
+      transform: translateX(4px);
+    }
+    .why-num {
+      font-family: 'Cairo', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: #fff;
+      background: var(--teal-1);
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .why-item h4 {
+      font-family: 'Cairo', sans-serif;
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: var(--teal-1);
+    }
+    html[lang="fr"] .why-item h4 {
+      font-family: 'Marcellus', serif;
+      font-weight: 400;
+      font-size: 17.5px;
+    }
+    .why-item p {
+      font-size: 13.5px;
+      color: var(--stone);
+      line-height: 1.8;
+    }
+    @media(max-width:900px) {
+      .why-grid {
+        grid-template-columns: 1fr;
+      }
+      .why-photo {
+        max-width: 420px;
+        margin: 0 auto;
+      }
+    }
+    @media(max-width:560px) {
+      .why-photo .badge-ring {
+        width: 76px;
+        height: 76px;
+        bottom: 12px;
+        right: 12px;
+      }
+      .badge-ring b {
+        font-size: 16px;
+      }
+      .badge-ring span {
+        font-size: 8px;
+        padding: 0 4px;
+      }
+    }
+
+    /* ===== CTA ===== */
+    .cta-strip {
+      position: relative;
+      padding: 0;
+      background-image: linear-gradient(115deg, rgba(11, 38, 34, 0.92), rgba(18, 60, 54, 0.85)), url('https://images.unsplash.com/photo-1705579604902-eb832f58bf85?auto=format&fit=crop&w=1600&q=70');
+      background-size: cover;
+      background-position: center;
+    }
+    .cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding: 56px 0;
+    }
+    .cta-inner h3 {
+      color: #fff;
+      font-size: 26px;
+      font-weight: 800;
+      font-family: 'Cairo', sans-serif;
+    }
+    html[lang="fr"] .cta-inner h3 {
+      font-family: 'Marcellus', serif;
+      font-weight: 400;
+    }
+    .cta-inner p {
+      color: var(--mist);
+      font-size: 14.5px;
+      margin-top: 8px;
+      opacity: .85;
+    }
+    .cta-call {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--brass);
+      color: var(--teal-1);
+      font-family: 'Cairo', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      padding: 17px 32px;
+      border-radius: 12px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+      transition: transform .2s;
+      direction: ltr;
+    }
+    .cta-call:hover {
+      transform: translateY(-3px);
+    }
+    @media(max-width:760px) {
+      .cta-inner {
+        text-align: center;
+        justify-content: center;
+      }
+      .cta-call {
+        font-size: 18px;
+        padding: 14px 26px;
+      }
+    }
+    @media(max-width:560px) {
+      .cta-inner h3 {
+        font-size: 22px;
+      }
+      .cta-call {
+        font-size: 16px;
+        padding: 12px 20px;
+      }
+    }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 999;
+      background: #25D366;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.45);
+      transition: transform .3s ease, box-shadow .3s ease;
+      animation: pulse 2.5s infinite;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.12);
+      box-shadow: 0 12px 40px rgba(37, 211, 102, 0.6);
+    }
+    .whatsapp-float svg {
+      width: 32px;
+      height: 32px;
+      fill: #fff;
+    }
+    .whatsapp-float .tooltip {
+      position: absolute;
+      bottom: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--teal-1);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all .3s ease;
+      font-family: 'Jost', sans-serif;
+    }
+    html[lang="ar"] .whatsapp-float .tooltip {
+      font-family: 'Cairo', sans-serif;
+    }
+    .whatsapp-float:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      bottom: 80px;
+    }
+    .whatsapp-float .tooltip::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 12px;
+      height: 12px;
+      background: var(--teal-1);
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 8px 30px rgba(37, 211, 102, 0.45);
+      }
+      50% {
+        box-shadow: 0 8px 50px rgba(37, 211, 102, 0.7);
+      }
+      100% {
+        box-shadow: 0 8px 30px rgba(37, 211, 102, 0.45);
+      }
+    }
+
+    @media(max-width:560px) {
+      .whatsapp-float {
+        width: 56px;
+        height: 56px;
+        bottom: 18px;
+        left: 18px;
+      }
+      .whatsapp-float svg {
+        width: 28px;
+        height: 28px;
+      }
+      .whatsapp-float .tooltip {
+        display: none;
+      }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #08201C;
+      color: var(--mist);
+      padding: 60px 0 26px;
+    }
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--line);
+    }
+    .foot-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+    html[lang="fr"] .foot-brand {
+      font-family: 'Marcellus', serif;
+    }
+    .foot-brand .ico {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, var(--brass), var(--brass-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    footer p {
+      font-size: 14px;
+      line-height: 1.9;
+      max-width: 340px;
+      opacity: .75;
+    }
+    footer h5 {
+      font-family: 'Cairo', sans-serif;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    html[lang="fr"] footer h5 {
+      font-family: 'Jost', sans-serif;
+      font-weight: 600;
+    }
+    footer ul {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      font-size: 14px;
+      opacity: .85;
+    }
+    footer ul a {
+      transition: color .2s;
+    }
+    footer ul a:hover {
+      color: var(--brass);
+    }
+    .foot-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 22px;
+      font-size: 12.5px;
+      opacity: .6;
+    }
+    @media(max-width:760px) {
+      .foot-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== MISC ===== */
+    svg {
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="nav">
-    <div class="brand">
-      <span class="ico"><svg width="19" height="19" viewBox="0 0 24 24" stroke="#0B2622" stroke-width="2.4"><path d="M12 2v20M4 8l8-4 8 4M4 16l8 4 8-4"/></svg></span>
-      GLACIA
-    </div>
-    <nav class="navlinks">
-      <a href="#services"><span class="fr">Services</span><span class="ar">خدماتنا</span></a>
-      <a href="#why"><span class="fr">Pourquoi nous</span><span class="ar">لماذا نحن</span></a>
-      <a href="#contact"><span class="fr">Contact</span><span class="ar">تواصل معنا</span></a>
-    </nav>
-    <div class="nav-right">
-      <div class="lang-switch" id="langSwitch">
-        <div class="lang-thumb"></div>
-        <button type="button" data-lang="fr" class="active">FR</button>
-        <button type="button" data-lang="ar">AR</button>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <span class="ico"><svg width="19" height="19" viewBox="0 0 24 24" stroke="#0B2622" stroke-width="2.4"><path d="M12 2v20M4 8l8-4 8 4M4 16l8 4 8-4"/></svg></span>
+        GLACIA
       </div>
-      <a class="nav-call" href="tel:0690668713" dir="ltr">
-        <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        <span class="fr">Appeler</span><span class="ar">اتصل الآن</span>
+      <nav class="navlinks">
+        <a href="#services"><span class="fr">Services</span><span class="ar">خدماتنا</span></a>
+        <a href="#why"><span class="fr">Pourquoi nous</span><span class="ar">لماذا نحن</span></a>
+        <a href="#contact"><span class="fr">Contact</span><span class="ar">تواصل معنا</span></a>
+      </nav>
+      <div class="nav-right">
+        <div class="lang-switch" id="langSwitch">
+          <div class="lang-thumb"></div>
+          <button type="button" data-lang="fr" class="active">FR</button>
+          <button type="button" data-lang="ar">AR</button>
+        </div>
+        <a class="nav-call" href="tel:0690668713" dir="ltr">
+          <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span class="fr">Appeler</span><span class="ar">اتصل الآن</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">
+          <span class="dot"></span>
+          <span class="fr">Technicien certifié · Service haut de gamme</span>
+          <span class="ar">فني معتمد · خدمة منزلية راقية</span>
+        </span>
+        <h1>
+          <span class="fr">Le froid et le confort,<br>avec l'exigence du <span>savoir-faire</span></span>
+          <span class="ar">التبريد والتكييف<br>بلمسة <span>احترافية راقية</span></span>
+        </h1>
+        <p>
+          <span class="fr">Installation et entretien de climatiseurs, réfrigérateurs et lave-linge. Recharge de fréon et détection de fuite avec une précision rigoureuse, par une équipe exigeante.</span>
+          <span class="ar">تركيب وصيانة المكيفات، الثلاجات والغسالات. شحن فريون وكشف تسريب بدقة متناهية، من فريق يجمع بين الخبرة الطويلة والذوق في كل تدخل.</span>
+        </p>
+        <div class="hero-ctas">
+          <a class="btn-primary" href="tel:0690668713" dir="ltr">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            0690 66 87 13
+          </a>
+          <a class="btn-ghost" href="#services">
+            <span class="fr">Voir les services</span><span class="ar">تصفح الخدمات</span>
+            <svg width="16" height="16" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><b>+15</b><span class="fr">ans d'expérience</span><span class="ar">سنة خبرة</span></div>
+          <div class="hero-stat"><b>100%</b><span class="fr">service garanti</span><span class="ar">ضمان الخدمة</span></div>
+          <div class="hero-stat"><b>24h</b><span class="fr">intervention rapide</span><span class="ar">تدخل سريع</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-frame">
+          <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783272129/IMG-20260705-WA0004_p3dumj.jpg" alt="15 years experience">
+        </div>
+        <div class="float-card">
+          <div class="fc-ico"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <div>
+            <b><span class="fr">Qualité garantie</span><span class="ar">ضمان جودة</span></b>
+            <span><span class="fr">sur chaque intervention</span><span class="ar">على كل تدخل</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" style="color:var(--teal-3);background:rgba(27,79,71,0.08);border-color:rgba(27,79,71,0.2);">
+          <span class="dot" style="background:var(--teal-3);"></span>
+          <span class="fr">Nos services</span><span class="ar">خدماتنا</span>
+        </span>
+        <h2><span class="fr">Tout ce dont votre maison a besoin</span><span class="ar">كل ما يحتاجه بيتك، بلمسة واحدة</span></h2>
+        <p>
+          <span class="fr">Une seule équipe pour tous vos appareils essentiels, de la première installation à l'entretien régulier.</span>
+          <span class="ar">فريق فني واحد يغطي كل الأجهزة المنزلية الأساسية، من التركيب الأول إلى الصيانة الدورية.</span>
+        </p>
+      </div>
+
+      <div class="service-grid">
+        <div class="s-card reveal">
+          <div class="s-photo">
+            <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783272082/IMG-20260705-WA0008_emttnc.jpg" alt="AC maintenance">
+            <div class="s-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="8" rx="2"/><rect x="3" y="14" width="12" height="6" rx="2"/></svg></div>
+          </div>
+          <div class="s-body">
+            <h3><span class="fr">Climatiseurs</span><span class="ar">تركيب وصيانة المكيفات</span></h3>
+            <p><span class="fr">Installation professionnelle et entretien régulier pour une performance durable.</span><span class="ar">تركيب احترافي لجميع أنواع أجهزة التكييف وصيانة دورية تحافظ على أدائها.</span></p>
+          </div>
+        </div>
+
+        <div class="s-card reveal">
+          <div class="s-photo">
+            <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783271914/%D9%85%D8%B1%D9%83%D8%B2-%D8%AE%D8%AF%D9%85%D8%A9-%D9%85%D8%B9%D8%AA%D9%85%D8%AF-%D9%84%D8%B5%D9%8A%D8%A7%D9%86%D8%A9-%D8%A7%D9%84%D8%A7%D8%AC%D9%87%D8%B2%D8%A9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A6%D9%8A%D8%A9-1_zwqhem.jpg" alt="Refrigerator">
+            <div class="s-ico"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="5" y1="11" x2="19" y2="11"/></svg></div>
+          </div>
+          <div class="s-body">
+            <h3><span class="fr">Réfrigérateurs & congélateurs</span><span class="ar">صيانة الثلاجات والمجمدات</span></h3>
+            <p><span class="fr">Réparation de toutes pannes, courantes ou complexes, toutes marques.</span><span class="ar">إصلاح جميع الأعطال الشائعة والمعقدة لكل الماركات.</span></p>
+          </div>
+        </div>
+
+        <div class="s-card reveal">
+          <div class="s-photo">
+            <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783271941/%D8%B5%D9%8A%D8%A7%D9%86%D8%A9-%D8%BA%D8%B3%D8%A7%D9%84%D8%A7%D8%AA-%D8%A7%D8%AA%D9%88%D9%85%D8%A7%D8%AA%D9%8A%D9%83-%D8%A7%D9%84%D8%AF%D9%85%D8%A7%D9%85_syscys.jpg" alt="Washing machine">
+            <div class="s-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><circle cx="12" cy="13" r="3"/></svg></div>
+          </div>
+          <div class="s-body">
+            <h3><span class="fr">Lave-linge</span><span class="ar">صيانة غسالات الملابس</span></h3>
+            <p><span class="fr">Diagnostic précis et réparation de tous types de lave-linge.</span><span class="ar">تشخيص دقيق وإصلاح لجميع أعطال الغسالات الأوتوماتيكية.</span></p>
+          </div>
+        </div>
+
+        <div class="s-card reveal">
+          <div class="s-photo">
+            <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783271960/%D9%86%D9%82%D8%B5-%D8%BA%D8%A7%D8%B2-%D8%A7%D9%84%D9%81%D8%B1%D9%8A%D9%88%D9%86-%D9%81%D9%8A-%D8%A7%D9%84%D8%AA%D9%83%D9%8A%D9%8A%D9%81-%D8%A7%D9%84%D8%A7%D8%B3%D8%A8%D9%84%D9%8A%D8%AA_nme4fr.webp" alt="Freon charging">
+            <div class="s-ico"><svg viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"/></svg></div>
+          </div>
+          <div class="s-body">
+            <h3><span class="fr">Recharge de fréon</span><span class="ar">شحن الفريون</span></h3>
+            <p><span class="fr">Recharge précise selon les spécifications, pour un froid optimal.</span><span class="ar">شحن دقيق بحسب مواصفات كل جهاز لضمان أعلى كفاءة تبريد.</span></p>
+          </div>
+        </div>
+
+        <div class="s-card reveal">
+          <div class="s-photo">
+            <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783271977/8eb4587a85787ae7be9ef9df15ac9fe7_p8vydv.jpg" alt="Leak detection">
+            <div class="s-ico"><svg viewBox="0 0 24 24"><path d="M11 2a9 9 0 1 0 9 9M11 2v9h9"/><circle cx="17" cy="17" r="4"/></svg></div>
+          </div>
+          <div class="s-body">
+            <h3><span class="fr">Détection de fuite</span><span class="ar">كشف التسريب</span></h3>
+            <p><span class="fr">Localisation précise de la fuite de gaz avant toute réparation.</span><span class="ar">تحديد مصدر تسريب الغاز بدقة قبل أي إصلاح.</span></p>
+          </div>
+        </div>
+
+        <div class="s-card reveal">
+          <div class="s-photo">
+            <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783272117/IMG-20260705-WA0014_oaz9ea.jpg" alt="Home service">
+            <div class="s-ico"><svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3"/></svg></div>
+          </div>
+          <div class="s-body">
+            <h3><span class="fr">Service à domicile rapide</span><span class="ar">صيانة منزلية سريعة</span></h3>
+            <p><span class="fr">Intervention le jour même dans la plupart des cas.</span><span class="ar">نأتي إليك بنفس اليوم في أغلب الأحيان.</span></p>
+            <div class="service-area">
+              <span class="fr">📍 Zone de service : <span class="highlight">Marrakech et ses environs</span></span>
+              <span class="ar">📍 المنطقة الشاملة للخدمة : <span class="highlight">مراكش والنواحي</span></span>
+            </div>
+            <ul class="service-list">
+              <li><span class="fr">Installation & entretien de tous les climatiseurs</span><span class="ar">تركيب وصيانة جميع أجهزة التكييف</span></li>
+              <li><span class="fr">Réparation de tous les réfrigérateurs</span><span class="ar">صيانة جميع أنواع الثلاجات والمجمدات</span></li>
+              <li><span class="fr">Réparation de tous les lave-linge</span><span class="ar">صيانة جميع أنواع غسالات الملابس</span></li>
+              <li><span class="fr">Recharge fréon - Détection de fuite</span><span class="ar">شحن الفريون - كشف التسريب</span></li>
+              <li><span class="fr">Service pro - Prix justes - Garantie</span><span class="ar">خدمة احترافية - أسعار مناسبة - ضمان على الخدمة</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why" id="why">
+    <div class="wrap why-grid">
+      <div class="why-photo reveal">
+        <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783274078/IMG-20260705-WA0006_zqrm4j.jpg" alt="Technician at work">
+        <div class="badge-ring">
+          <b>+15</b>
+          <span><span class="fr">ans d'expérience</span><span class="ar">سنة خبرة</span></span>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">
+          <span class="dot"></span>
+          <span class="fr">Pourquoi nous</span><span class="ar">لماذا نحن</span>
+        </span>
+        <div class="section-head" style="margin-bottom:30px;">
+          <h2><span class="fr">Une confiance qui se construit par le travail</span><span class="ar">ثقة يبنيها العمل، لا الوعود</span></h2>
+          <p>
+            <span class="fr">Nous traitons chaque appareil comme le nôtre : diagnostic juste, pièces adaptées, prix clair dès le départ.</span>
+            <span class="ar">نتعامل مع كل جهاز وكأنه في بيتنا: تشخيص صحيح، قطع مناسبة، وسعر واضح من البداية.</span>
+          </p>
+        </div>
+        <div class="why-list">
+          <div class="why-item reveal">
+            <div class="why-num">١</div>
+            <div>
+              <h4><span class="fr">Longue expérience</span><span class="ar">خبرة طويلة في المجال</span></h4>
+              <p><span class="fr">Des années à traiter toutes marques et toutes pannes, des plus simples aux plus complexes.</span><span class="ar">سنوات من التعامل مع مختلف الماركات والأعطال، من الأبسط إلى الأكثر تعقيدًا.</span></p>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-num">٢</div>
+            <div>
+              <h4><span class="fr">Service professionnel</span><span class="ar">خدمة احترافية وموثوقة</span></h4>
+              <p><span class="fr">Outils de mesure précis et diagnostic complet avant chaque intervention.</span><span class="ar">أدوات قياس دقيقة وفحص شامل قبل كل تدخل.</span></p>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-num">٣</div>
+            <div>
+              <h4><span class="fr">Tarifs justes et clairs</span><span class="ar">أسعار مناسبة وواضحة</span></h4>
+              <p><span class="fr">Prix équitable fixé avant le début des travaux, sans surprises.</span><span class="ar">تسعير عادل يُحدد قبل بدء العمل، بدون مفاجآت.</span></p>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-num">٤</div>
+            <div>
+              <h4><span class="fr">Garantie réelle</span><span class="ar">ضمان حقيقي على الخدمة</span></h4>
+              <p><span class="fr">Chaque intervention est garantie, retour gratuit si nécessaire.</span><span class="ar">كل تدخل مضمون، ونعود إذا لزم الأمر دون أي تكلفة إضافية.</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-strip">
+    <div class="wrap cta-inner">
+      <div>
+        <h3><span class="fr">Une panne maintenant ?</span><span class="ar">عطل الآن؟ لا داعي للانتظار</span></h3>
+        <p><span class="fr">Appelez-nous aujourd'hui pour une intervention rapide</span><span class="ar">اتصل بنا اليوم واحصل على فني في أقرب وقت ممكن</span></p>
+      </div>
+      <a class="cta-call" href="tel:0690668713" dir="ltr">
+        <svg width="20" height="20" viewBox="0 0 24 24" stroke="#0B2622"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        0690 66 87 13
       </a>
     </div>
   </div>
-</header>
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">
-        <span class="dot"></span>
-        <span class="fr">Technicien certifié · Service haut de gamme</span>
-        <span class="ar">فني معتمد · خدمة منزلية راقية</span>
-      </span>
-      <h1>
-        <span class="fr">Le froid et le confort,<br>avec l'exigence du <span>savoir-faire</span></span>
-        <span class="ar">التبريد والتكييف<br>بلمسة <span>احترافية راقية</span></span>
-      </h1>
-      <p>
-        <span class="fr">Installation et entretien de climatiseurs, réfrigérateurs et lave-linge. Recharge de fréon et détection de fuite avec une précision rigoureuse, par une équipe exigeante.</span>
-        <span class="ar">تركيب وصيانة المكيفات، الثلاجات والغسالات. شحن فريون وكشف تسريب بدقة متناهية، من فريق يجمع بين الخبرة الطويلة والذوق في كل تدخل.</span>
-      </p>
-      <div class="hero-ctas">
-        <a class="btn-primary" href="tel:0690668713" dir="ltr">
-          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          0690 66 87 13
-        </a>
-        <a class="btn-ghost" href="#services">
-          <span class="fr">Voir les services</span><span class="ar">تصفح الخدمات</span>
-          <svg width="16" height="16" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat"><b>+15</b><span class="fr">ans d'expérience</span><span class="ar">سنة خبرة</span></div>
-        <div class="hero-stat"><b>100%</b><span class="fr">service garanti</span><span class="ar">ضمان الخدمة</span></div>
-        <div class="hero-stat"><b>24h</b><span class="fr">intervention rapide</span><span class="ar">تدخل سريع</span></div>
-      </div>
-    </div>
-
-    <div class="hero-visual">
-      <div class="hero-frame">
-        <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783272129/IMG-20260705-WA0004_p3dumj.jpg" alt="15 years experience">
-      </div>
-      <div class="float-card">
-        <div class="fc-ico"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-grid">
         <div>
-          <b><span class="fr">Qualité garantie</span><span class="ar">ضمان جودة</span></b>
-          <span><span class="fr">sur chaque intervention</span><span class="ar">على كل تدخل</span></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="services" id="services">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow" style="color:var(--teal-3);background:rgba(27,79,71,0.08);border-color:rgba(27,79,71,0.2);">
-        <span class="dot" style="background:var(--teal-3);"></span>
-        <span class="fr">Nos services</span><span class="ar">خدماتنا</span>
-      </span>
-      <h2><span class="fr">Tout ce dont votre maison a besoin</span><span class="ar">كل ما يحتاجه بيتك، بلمسة واحدة</span></h2>
-      <p>
-        <span class="fr">Une seule équipe pour tous vos appareils essentiels, de la première installation à l'entretien régulier.</span>
-        <span class="ar">فريق فني واحد يغطي كل الأجهزة المنزلية الأساسية، من التركيب الأول إلى الصيانة الدورية.</span>
-      </p>
-    </div>
-
-    <div class="service-grid">
-      <div class="s-card reveal">
-        <div class="s-photo">
-          <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783272082/IMG-20260705-WA0008_emttnc.jpg" alt="AC maintenance">
-          <div class="s-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="8" rx="2"/><rect x="3" y="14" width="12" height="6" rx="2"/></svg></div>
-        </div>
-        <div class="s-body">
-          <h3><span class="fr">Climatiseurs</span><span class="ar">تركيب وصيانة المكيفات</span></h3>
-          <p><span class="fr">Installation professionnelle et entretien régulier pour une performance durable.</span><span class="ar">تركيب احترافي لجميع أنواع أجهزة التكييف وصيانة دورية تحافظ على أدائها.</span></p>
-        </div>
-      </div>
-
-      <div class="s-card reveal">
-        <div class="s-photo">
-          <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783271914/%D9%85%D8%B1%D9%83%D8%B2-%D8%AE%D8%AF%D9%85%D8%A9-%D9%85%D8%B9%D8%AA%D9%85%D8%AF-%D9%84%D8%B5%D9%8A%D8%A7%D9%86%D8%A9-%D8%A7%D9%84%D8%A7%D8%AC%D9%87%D8%B2%D8%A9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A6%D9%8A%D8%A9-1_zwqhem.jpg" alt="Refrigerator">
-          <div class="s-ico"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="5" y1="11" x2="19" y2="11"/></svg></div>
-        </div>
-        <div class="s-body">
-          <h3><span class="fr">Réfrigérateurs & congélateurs</span><span class="ar">صيانة الثلاجات والمجمدات</span></h3>
-          <p><span class="fr">Réparation de toutes pannes, courantes ou complexes, toutes marques.</span><span class="ar">إصلاح جميع الأعطال الشائعة والمعقدة لكل الماركات.</span></p>
-        </div>
-      </div>
-
-      <div class="s-card reveal">
-        <div class="s-photo">
-          <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783271941/%D8%B5%D9%8A%D8%A7%D9%86%D8%A9-%D8%BA%D8%B3%D8%A7%D9%84%D8%A7%D8%AA-%D8%A7%D8%AA%D9%88%D9%85%D8%A7%D8%AA%D9%8A%D9%83-%D8%A7%D9%84%D8%AF%D9%85%D8%A7%D9%85_syscys.jpg" alt="Washing machine">
-          <div class="s-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><circle cx="12" cy="13" r="3"/></svg></div>
-        </div>
-        <div class="s-body">
-          <h3><span class="fr">Lave-linge</span><span class="ar">صيانة غسالات الملابس</span></h3>
-          <p><span class="fr">Diagnostic précis et réparation de tous types de lave-linge.</span><span class="ar">تشخيص دقيق وإصلاح لجميع أعطال الغسالات الأوتوماتيكية.</span></p>
-        </div>
-      </div>
-
-      <div class="s-card reveal">
-        <div class="s-photo">
-          <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783271960/%D9%86%D9%82%D8%B5-%D8%BA%D8%A7%D8%B2-%D8%A7%D9%84%D9%81%D8%B1%D9%8A%D9%88%D9%86-%D9%81%D9%8A-%D8%A7%D9%84%D8%AA%D9%83%D9%8A%D9%8A%D9%81-%D8%A7%D9%84%D8%A7%D8%B3%D8%A8%D9%84%D9%8A%D8%AA_nme4fr.webp" alt="Freon charging">
-          <div class="s-ico"><svg viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"/></svg></div>
-        </div>
-        <div class="s-body">
-          <h3><span class="fr">Recharge de fréon</span><span class="ar">شحن الفريون</span></h3>
-          <p><span class="fr">Recharge précise selon les spécifications, pour un froid optimal.</span><span class="ar">شحن دقيق بحسب مواصفات كل جهاز لضمان أعلى كفاءة تبريد.</span></p>
-        </div>
-      </div>
-
-      <div class="s-card reveal">
-        <div class="s-photo">
-          <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783271977/8eb4587a85787ae7be9ef9df15ac9fe7_p8vydv.jpg" alt="Leak detection">
-          <div class="s-ico"><svg viewBox="0 0 24 24"><path d="M11 2a9 9 0 1 0 9 9M11 2v9h9"/><circle cx="17" cy="17" r="4"/></svg></div>
-        </div>
-        <div class="s-body">
-          <h3><span class="fr">Détection de fuite</span><span class="ar">كشف التسريب</span></h3>
-          <p><span class="fr">Localisation précise de la fuite de gaz avant toute réparation.</span><span class="ar">تحديد مصدر تسريب الغاز بدقة قبل أي إصلاح.</span></p>
-        </div>
-      </div>
-
-      <div class="s-card reveal">
-        <div class="s-photo">
-          <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783272117/IMG-20260705-WA0014_oaz9ea.jpg" alt="Home service">
-          <div class="s-ico"><svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3"/></svg></div>
-        </div>
-        <div class="s-body">
-          <h3><span class="fr">Service à domicile rapide</span><span class="ar">صيانة منزلية سريعة</span></h3>
-          <p><span class="fr">Intervention le jour même dans la plupart des cas.</span><span class="ar">نأتي إليك بنفس اليوم في أغلب الأحيان.</span></p>
-          <div class="service-area">
-            <span class="fr">📍 Zone de service : <span class="highlight">Marrakech et ses environs</span></span>
-            <span class="ar">📍 المنطقة الشاملة للخدمة : <span class="highlight">مراكش والنواحي</span></span>
+          <div class="foot-brand">
+            <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" stroke="#0B2622" stroke-width="2.4"><path d="M12 2v20M4 8l8-4 8 4M4 16l8 4 8-4"/></svg></span>
+            GLACIA
           </div>
-          <ul class="service-list">
-            <li><span class="fr">Installation & entretien de tous les climatiseurs</span><span class="ar">تركيب وصيانة جميع أجهزة التكييف</span></li>
-            <li><span class="fr">Réparation de tous les réfrigérateurs</span><span class="ar">صيانة جميع أنواع الثلاجات والمجمدات</span></li>
-            <li><span class="fr">Réparation de tous les lave-linge</span><span class="ar">صيانة جميع أنواع غسالات الملابس</span></li>
-            <li><span class="fr">Recharge fréon - Détection de fuite</span><span class="ar">شحن الفريون - كشف التسريب</span></li>
-            <li><span class="fr">Service pro - Prix justes - Garantie</span><span class="ar">خدمة احترافية - أسعار مناسبة - ضمان على الخدمة</span></li>
+          <p>
+            <span class="fr">Technicien spécialisé en climatisation, réfrigération et lave-linge. Votre confort, notre engagement.</span>
+            <span class="ar">فني متخصص في التبريد والتكييف وصيانة غسالات الملابس. خدمتكم راحتنا، ورضاكم هدفنا.</span>
+          </p>
+        </div>
+        <div>
+          <h5><span class="fr">Services</span><span class="ar">الخدمات</span></h5>
+          <ul>
+            <li><a href="#services"><span class="fr">Climatisation</span><span class="ar">تركيب وصيانة تكييف</span></a></li>
+            <li><a href="#services"><span class="fr">Réfrigérateurs</span><span class="ar">صيانة ثلاجات ومجمدات</span></a></li>
+            <li><a href="#services"><span class="fr">Lave-linge</span><span class="ar">صيانة غسالات</span></a></li>
+            <li><a href="#services"><span class="fr">Fréon & détection de fuite</span><span class="ar">شحن فريون وكشف تسريب</span></a></li>
+          </ul>
+        </div>
+        <div>
+          <h5><span class="fr">Contact</span><span class="ar">التواصل</span></h5>
+          <ul>
+            <li style="direction:ltr; text-align:right;"><a href="tel:0690668713" dir="ltr">0690 66 87 13</a></li>
+            <li><span class="fr">Service quotidien à domicile</span><span class="ar">صيانة منزلية يومية</span></li>
+            <li><span class="fr">Rapide et fiable</span><span class="ar">خدمة سريعة وموثوقة</span></li>
           </ul>
         </div>
       </div>
+      <div class="foot-bottom">
+        <span><span class="fr">© 2026 GLACIA — Tous droits réservés</span><span class="ar">© 2026 GLACIA — جميع الحقوق محفوظة</span></span>
+        <span><span class="fr">Qualité garantie sur chaque service</span><span class="ar">ضمان جودة على كل خدمة</span></span>
+      </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<section class="why" id="why">
-  <div class="wrap why-grid">
-    <div class="why-photo reveal">
-      <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783274078/IMG-20260705-WA0006_zqrm4j.jpg" alt="Technician at work">
-      <div class="badge-ring">
-        <b>+15</b>
-        <span><span class="fr">ans d'expérience</span><span class="ar">سنة خبرة</span></span>
-      </div>
-    </div>
-    <div>
-      <span class="eyebrow">
-        <span class="dot"></span>
-        <span class="fr">Pourquoi nous</span><span class="ar">لماذا نحن</span>
-      </span>
-      <div class="section-head" style="margin-bottom:30px;">
-        <h2><span class="fr">Une confiance qui se construit par le travail</span><span class="ar">ثقة يبنيها العمل، لا الوعود</span></h2>
-        <p>
-          <span class="fr">Nous traitons chaque appareil comme le nôtre : diagnostic juste, pièces adaptées, prix clair dès le départ.</span>
-          <span class="ar">نتعامل مع كل جهاز وكأنه في بيتنا: تشخيص صحيح، قطع مناسبة، وسعر واضح من البداية.</span>
-        </p>
-      </div>
-      <div class="why-list">
-        <div class="why-item reveal">
-          <div class="why-num">١</div>
-          <div>
-            <h4><span class="fr">Longue expérience</span><span class="ar">خبرة طويلة في المجال</span></h4>
-            <p><span class="fr">Des années à traiter toutes marques et toutes pannes, des plus simples aux plus complexes.</span><span class="ar">سنوات من التعامل مع مختلف الماركات والأعطال، من الأبسط إلى الأكثر تعقيدًا.</span></p>
-          </div>
-        </div>
-        <div class="why-item reveal">
-          <div class="why-num">٢</div>
-          <div>
-            <h4><span class="fr">Service professionnel</span><span class="ar">خدمة احترافية وموثوقة</span></h4>
-            <p><span class="fr">Outils de mesure précis et diagnostic complet avant chaque intervention.</span><span class="ar">أدوات قياس دقيقة وفحص شامل قبل كل تدخل.</span></p>
-          </div>
-        </div>
-        <div class="why-item reveal">
-          <div class="why-num">٣</div>
-          <div>
-            <h4><span class="fr">Tarifs justes et clairs</span><span class="ar">أسعار مناسبة وواضحة</span></h4>
-            <p><span class="fr">Prix équitable fixé avant le début des travaux, sans surprises.</span><span class="ar">تسعير عادل يُحدد قبل بدء العمل، بدون مفاجآت.</span></p>
-          </div>
-        </div>
-        <div class="why-item reveal">
-          <div class="why-num">٤</div>
-          <div>
-            <h4><span class="fr">Garantie réelle</span><span class="ar">ضمان حقيقي على الخدمة</span></h4>
-            <p><span class="fr">Chaque intervention est garantie, retour gratuit si nécessaire.</span><span class="ar">كل تدخل مضمون، ونعود إذا لزم الأمر دون أي تكلفة إضافية.</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="cta-strip">
-  <div class="wrap cta-inner">
-    <div>
-      <h3><span class="fr">Une panne maintenant ?</span><span class="ar">عطل الآن؟ لا داعي للانتظار</span></h3>
-      <p><span class="fr">Appelez-nous aujourd'hui pour une intervention rapide</span><span class="ar">اتصل بنا اليوم واحصل على فني في أقرب وقت ممكن</span></p>
-    </div>
-    <a class="cta-call" href="tel:0690668713" dir="ltr">
-      <svg width="20" height="20" viewBox="0 0 24 24" stroke="#0B2622"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      0690 66 87 13
-    </a>
-  </div>
-</div>
-
-<footer id="contact">
-  <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <div class="foot-brand">
-          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" stroke="#0B2622" stroke-width="2.4"><path d="M12 2v20M4 8l8-4 8 4M4 16l8 4 8-4"/></svg></span>
-          GLACIA
-        </div>
-        <p>
-          <span class="fr">Technicien spécialisé en climatisation, réfrigération et lave-linge. Votre confort, notre engagement.</span>
-          <span class="ar">فني متخصص في التبريد والتكييف وصيانة غسالات الملابس. خدمتكم راحتنا، ورضاكم هدفنا.</span>
-        </p>
-      </div>
-      <div>
-        <h5><span class="fr">Services</span><span class="ar">الخدمات</span></h5>
-        <ul>
-          <li><a href="#services"><span class="fr">Climatisation</span><span class="ar">تركيب وصيانة تكييف</span></a></li>
-          <li><a href="#services"><span class="fr">Réfrigérateurs</span><span class="ar">صيانة ثلاجات ومجمدات</span></a></li>
-          <li><a href="#services"><span class="fr">Lave-linge</span><span class="ar">صيانة غسالات</span></a></li>
-          <li><a href="#services"><span class="fr">Fréon & détection de fuite</span><span class="ar">شحن فريون وكشف تسريب</span></a></li>
-        </ul>
-      </div>
-      <div>
-        <h5><span class="fr">Contact</span><span class="ar">التواصل</span></h5>
-        <ul>
-          <li style="direction:ltr; text-align:right;"><a href="tel:0690668713" dir="ltr">0690 66 87 13</a></li>
-          <li><span class="fr">Service quotidien à domicile</span><span class="ar">صيانة منزلية يومية</span></li>
-          <li><span class="fr">Rapide et fiable</span><span class="ar">خدمة سريعة وموثوقة</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="foot-bottom">
-      <span><span class="fr">© 2026 GLACIA — Tous droits réservés</span><span class="ar">© 2026 GLACIA — جميع الحقوق محفوظة</span></span>
-      <span><span class="fr">Qualité garantie sur chaque service</span><span class="ar">ضمان جودة على كل خدمة</span></span>
-    </div>
-  </div>
-</footer>
-
-<a href="https://wa.me/212690668713?text=Bonjour%2C%20je%20souhaite%20avoir%20plus%20d%27informations%20sur%20vos%20services%20de%20climatisation%20et%20de%20réfrigération." 
-   class="whatsapp-float" 
-   target="_blank" 
-   rel="noopener noreferrer"
-   aria-label="Contactez-nous sur WhatsApp">
+  <a href="https://wa.me/212690668713?text=Bonjour%2C%20je%20souhaite%20avoir%20plus%20d%27informations%20sur%20vos%20services%20de%20climatisation%20et%20de%20réfrigération."
+  class="whatsapp-float"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contactez-nous sur WhatsApp">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
@@ -758,26 +1349,26 @@
 <script>
   const html = document.documentElement;
   const buttons = document.querySelectorAll('.lang-switch button');
-  buttons.forEach(function(btn){
-    btn.addEventListener('click', function(){
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
       var lang = btn.dataset.lang;
       html.setAttribute('lang', lang);
       html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-      buttons.forEach(function(b){
+      buttons.forEach(function(b) {
         b.classList.toggle('active', b === btn);
       });
     });
   });
 
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
         e.target.classList.add('in');
         io.unobserve(e.target);
       }
     });
-  }, {threshold:0.15});
-  document.querySelectorAll('.reveal').forEach(function(el){
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(function(el) {
     io.observe(el);
   });
 </script>
