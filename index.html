@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GLACIA — تبريد وتكييف راقٍ | Climatisation & Réfrigération</title>
+<title>GLACIA — Climatisation & Réfrigération | تبريد وتكييف راقٍ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Almarai:wght@300;400;700;800&family=Marcellus&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -19,6 +19,7 @@
     --ink:#1C231F;
     --stone:#5C6B63;
     --line: rgba(255,255,255,0.12);
+    --whatsapp:#25D366;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -92,7 +93,7 @@
     z-index:1;
   }
   html[lang="fr"] .lang-thumb{transform:translateX(-100%);}
-  html[dir="rtl"][lang="ar"] .lang-thumb{transform:translateX(0);right:3px;}
+  html[lang="ar"] .lang-thumb{transform:translateX(0);right:3px;}
   html[dir="ltr"] .lang-switch{flex-direction:row;}
 
   .nav-call{
@@ -287,6 +288,19 @@
     line-height:1.8;
     margin-bottom:4px;
   }
+  .service-area{
+    margin-top:14px;
+    padding:12px 16px;
+    background:var(--teal-1);
+    border-radius:10px;
+    color:#fff;
+    font-size:14px;
+    text-align:center;
+    font-weight:600;
+    border-right:3px solid var(--brass);
+  }
+  html[lang="fr"] .service-area{font-weight:500;}
+  .service-area .highlight{color:var(--brass);}
   @media(max-width:860px){.service-grid{grid-template-columns:1fr 1fr;}}
   @media(max-width:560px){.service-grid{grid-template-columns:1fr;}}
 
@@ -355,6 +369,82 @@
   .cta-call:hover{transform:translateY(-3px);}
   @media(max-width:760px){.cta-inner{text-align:center;justify-content:center;}}
 
+  /* ===== WhatsApp Floating Button ===== */
+  .whatsapp-float{
+    position:fixed;
+    bottom:28px;
+    left:28px;
+    z-index:999;
+    background:#25D366;
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 8px 30px rgba(37,211,102,0.45);
+    transition:transform .3s ease, box-shadow .3s ease;
+    animation:pulse 2.5s infinite;
+  }
+  .whatsapp-float:hover{
+    transform:scale(1.12);
+    box-shadow:0 12px 40px rgba(37,211,102,0.6);
+  }
+  .whatsapp-float svg{
+    width:32px;
+    height:32px;
+    fill:#fff;
+  }
+  .whatsapp-float .tooltip{
+    position:absolute;
+    bottom:72px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--teal-1);
+    color:#fff;
+    padding:8px 16px;
+    border-radius:8px;
+    font-size:13px;
+    white-space:nowrap;
+    opacity:0;
+    visibility:hidden;
+    transition:all .3s ease;
+    font-family:'Jost',sans-serif;
+  }
+  html[lang="ar"] .whatsapp-float .tooltip{font-family:'Cairo',sans-serif;}
+  .whatsapp-float:hover .tooltip{
+    opacity:1;
+    visibility:visible;
+    bottom:80px;
+  }
+  .whatsapp-float .tooltip::after{
+    content:'';
+    position:absolute;
+    bottom:-6px;
+    left:50%;
+    transform:translateX(-50%) rotate(45deg);
+    width:12px;
+    height:12px;
+    background:var(--teal-1);
+  }
+
+  @keyframes pulse{
+    0%{box-shadow:0 8px 30px rgba(37,211,102,0.45);}
+    50%{box-shadow:0 8px 50px rgba(37,211,102,0.7);}
+    100%{box-shadow:0 8px 30px rgba(37,211,102,0.45);}
+  }
+
+  @media(max-width:560px){
+    .whatsapp-float{
+      width:56px;
+      height:56px;
+      bottom:18px;
+      left:18px;
+    }
+    .whatsapp-float svg{width:28px;height:28px;}
+    .whatsapp-float .tooltip{display:none;}
+  }
+
   footer{background:#08201C;color:var(--mist);padding:60px 0 26px;}
   .foot-grid{
     display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line);
@@ -388,19 +478,19 @@
       GLACIA
     </div>
     <nav class="navlinks">
-      <a href="#services"><span class="ar">خدماتنا</span><span class="fr">Services</span></a>
-      <a href="#why"><span class="ar">لماذا نحن</span><span class="fr">Pourquoi nous</span></a>
-      <a href="#contact"><span class="ar">تواصل معنا</span><span class="fr">Contact</span></a>
+      <a href="#services"><span class="fr">Services</span><span class="ar">خدماتنا</span></a>
+      <a href="#why"><span class="fr">Pourquoi nous</span><span class="ar">لماذا نحن</span></a>
+      <a href="#contact"><span class="fr">Contact</span><span class="ar">تواصل معنا</span></a>
     </nav>
     <div class="nav-right">
       <div class="lang-switch" id="langSwitch">
         <div class="lang-thumb"></div>
-        <button type="button" data-lang="ar" class="active">AR</button>
-        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="fr" class="active">FR</button>
+        <button type="button" data-lang="ar">AR</button>
       </div>
       <a class="nav-call" href="tel:0690668713" dir="ltr">
         <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        <span class="ar">اتصل الآن</span><span class="fr">Appeler</span>
+        <span class="fr">Appeler</span><span class="ar">اتصل الآن</span>
       </a>
     </div>
   </div>
@@ -411,16 +501,16 @@
     <div>
       <span class="eyebrow">
         <span class="dot"></span>
-        <span class="ar">فني معتمد · خدمة منزلية راقية</span>
         <span class="fr">Technicien certifié · Service haut de gamme</span>
+        <span class="ar">فني معتمد · خدمة منزلية راقية</span>
       </span>
       <h1>
-        <span class="ar">التبريد والتكييف<br>بلمسة <span>احترافية راقية</span></span>
         <span class="fr">Le froid et le confort,<br>avec l'exigence du <span>savoir-faire</span></span>
+        <span class="ar">التبريد والتكييف<br>بلمسة <span>احترافية راقية</span></span>
       </h1>
       <p>
-        <span class="ar">تركيب وصيانة المكيفات، الثلاجات والغسالات. شحن فريون وكشف تسريب بدقة متناهية، من فريق يجمع بين الخبرة الطويلة والذوق في كل تدخل.</span>
         <span class="fr">Installation et entretien de climatiseurs, réfrigérateurs et lave-linge. Recharge de fréon et détection de fuite avec une précision rigoureuse, par une équipe exigeante.</span>
+        <span class="ar">تركيب وصيانة المكيفات، الثلاجات والغسالات. شحن فريون وكشف تسريب بدقة متناهية، من فريق يجمع بين الخبرة الطويلة والذوق في كل تدخل.</span>
       </p>
       <div class="hero-ctas">
         <a class="btn-primary" href="tel:0690668713" dir="ltr">
@@ -428,14 +518,14 @@
           0690 66 87 13
         </a>
         <a class="btn-ghost" href="#services">
-          <span class="ar">تصفح الخدمات</span><span class="fr">Voir les services</span>
+          <span class="fr">Voir les services</span><span class="ar">تصفح الخدمات</span>
           <svg width="16" height="16" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
       <div class="hero-stats">
-        <div class="hero-stat"><b>+15</b><span class="ar">سنة خبرة</span><span class="fr">ans d'expérience</span></div>
-        <div class="hero-stat"><b>100%</b><span class="ar">ضمان الخدمة</span><span class="fr">service garanti</span></div>
-        <div class="hero-stat"><b>24h</b><span class="ar">تدخل سريع</span><span class="fr">intervention rapide</span></div>
+        <div class="hero-stat"><b>+15</b><span class="fr">ans d'expérience</span><span class="ar">سنة خبرة</span></div>
+        <div class="hero-stat"><b>100%</b><span class="fr">service garanti</span><span class="ar">ضمان الخدمة</span></div>
+        <div class="hero-stat"><b>24h</b><span class="fr">intervention rapide</span><span class="ar">تدخل سريع</span></div>
       </div>
     </div>
 
@@ -446,8 +536,8 @@
       <div class="float-card">
         <div class="fc-ico"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
         <div>
-          <b><span class="ar">ضمان جودة</span><span class="fr">Qualité garantie</span></b>
-          <span><span class="ar">على كل تدخل</span><span class="fr">sur chaque intervention</span></span>
+          <b><span class="fr">Qualité garantie</span><span class="ar">ضمان جودة</span></b>
+          <span><span class="fr">sur chaque intervention</span><span class="ar">على كل تدخل</span></span>
         </div>
       </div>
     </div>
@@ -459,12 +549,12 @@
     <div class="section-head reveal">
       <span class="eyebrow" style="color:var(--teal-3);background:rgba(27,79,71,0.08);border-color:rgba(27,79,71,0.2);">
         <span class="dot" style="background:var(--teal-3);"></span>
-        <span class="ar">خدماتنا</span><span class="fr">Nos services</span>
+        <span class="fr">Nos services</span><span class="ar">خدماتنا</span>
       </span>
-      <h2><span class="ar">كل ما يحتاجه بيتك، بلمسة واحدة</span><span class="fr">Tout ce dont votre maison a besoin</span></h2>
+      <h2><span class="fr">Tout ce dont votre maison a besoin</span><span class="ar">كل ما يحتاجه بيتك، بلمسة واحدة</span></h2>
       <p>
-        <span class="ar">فريق فني واحد يغطي كل الأجهزة المنزلية الأساسية، من التركيب الأول إلى الصيانة الدورية.</span>
         <span class="fr">Une seule équipe pour tous vos appareils essentiels, de la première installation à l'entretien régulier.</span>
+        <span class="ar">فريق فني واحد يغطي كل الأجهزة المنزلية الأساسية، من التركيب الأول إلى الصيانة الدورية.</span>
       </p>
     </div>
 
@@ -475,8 +565,8 @@
           <div class="s-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="8" rx="2"/><rect x="3" y="14" width="12" height="6" rx="2"/></svg></div>
         </div>
         <div class="s-body">
-          <h3><span class="ar">تركيب وصيانة المكيفات</span><span class="fr">Climatiseurs</span></h3>
-          <p><span class="ar">تركيب احترافي لجميع أنواع أجهزة التكييف وصيانة دورية تحافظ على أدائها.</span><span class="fr">Installation professionnelle et entretien régulier pour une performance durable.</span></p>
+          <h3><span class="fr">Climatiseurs</span><span class="ar">تركيب وصيانة المكيفات</span></h3>
+          <p><span class="fr">Installation professionnelle et entretien régulier pour une performance durable.</span><span class="ar">تركيب احترافي لجميع أنواع أجهزة التكييف وصيانة دورية تحافظ على أدائها.</span></p>
         </div>
       </div>
 
@@ -486,8 +576,8 @@
           <div class="s-ico"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="5" y1="11" x2="19" y2="11"/></svg></div>
         </div>
         <div class="s-body">
-          <h3><span class="ar">صيانة الثلاجات والمجمدات</span><span class="fr">Réfrigérateurs & congélateurs</span></h3>
-          <p><span class="ar">إصلاح جميع الأعطال الشائعة والمعقدة لكل الماركات.</span><span class="fr">Réparation de toutes pannes, courantes ou complexes, toutes marques.</span></p>
+          <h3><span class="fr">Réfrigérateurs & congélateurs</span><span class="ar">صيانة الثلاجات والمجمدات</span></h3>
+          <p><span class="fr">Réparation de toutes pannes, courantes ou complexes, toutes marques.</span><span class="ar">إصلاح جميع الأعطال الشائعة والمعقدة لكل الماركات.</span></p>
         </div>
       </div>
 
@@ -497,8 +587,8 @@
           <div class="s-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><circle cx="12" cy="13" r="3"/></svg></div>
         </div>
         <div class="s-body">
-          <h3><span class="ar">صيانة غسالات الملابس</span><span class="fr">Lave-linge</span></h3>
-          <p><span class="ar">تشخيص دقيق وإصلاح لجميع أعطال الغسالات الأوتوماتيكية.</span><span class="fr">Diagnostic précis et réparation de tous types de lave-linge.</span></p>
+          <h3><span class="fr">Lave-linge</span><span class="ar">صيانة غسالات الملابس</span></h3>
+          <p><span class="fr">Diagnostic précis et réparation de tous types de lave-linge.</span><span class="ar">تشخيص دقيق وإصلاح لجميع أعطال الغسالات الأوتوماتيكية.</span></p>
         </div>
       </div>
 
@@ -508,8 +598,8 @@
           <div class="s-ico"><svg viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"/></svg></div>
         </div>
         <div class="s-body">
-          <h3><span class="ar">شحن الفريون</span><span class="fr">Recharge de fréon</span></h3>
-          <p><span class="ar">شحن دقيق بحسب مواصفات كل جهاز لضمان أعلى كفاءة تبريد.</span><span class="fr">Recharge précise selon les spécifications, pour un froid optimal.</span></p>
+          <h3><span class="fr">Recharge de fréon</span><span class="ar">شحن الفريون</span></h3>
+          <p><span class="fr">Recharge précise selon les spécifications, pour un froid optimal.</span><span class="ar">شحن دقيق بحسب مواصفات كل جهاز لضمان أعلى كفاءة تبريد.</span></p>
         </div>
       </div>
 
@@ -519,8 +609,8 @@
           <div class="s-ico"><svg viewBox="0 0 24 24"><path d="M11 2a9 9 0 1 0 9 9M11 2v9h9"/><circle cx="17" cy="17" r="4"/></svg></div>
         </div>
         <div class="s-body">
-          <h3><span class="ar">كشف التسريب</span><span class="fr">Détection de fuite</span></h3>
-          <p><span class="ar">تحديد مصدر تسريب الغاز بدقة قبل أي إصلاح.</span><span class="fr">Localisation précise de la fuite de gaz avant toute réparation.</span></p>
+          <h3><span class="fr">Détection de fuite</span><span class="ar">كشف التسريب</span></h3>
+          <p><span class="fr">Localisation précise de la fuite de gaz avant toute réparation.</span><span class="ar">تحديد مصدر تسريب الغاز بدقة قبل أي إصلاح.</span></p>
         </div>
       </div>
 
@@ -530,14 +620,18 @@
           <div class="s-ico"><svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3"/></svg></div>
         </div>
         <div class="s-body">
-          <h3><span class="ar">صيانة منزلية سريعة</span><span class="fr">Service à domicile rapide</span></h3>
-          <p><span class="ar">نأتي إليك بنفس اليوم في أغلب الأحيان.</span><span class="fr">Intervention le jour même dans la plupart des cas.</span></p>
+          <h3><span class="fr">Service à domicile rapide</span><span class="ar">صيانة منزلية سريعة</span></h3>
+          <p><span class="fr">Intervention le jour même dans la plupart des cas.</span><span class="ar">نأتي إليك بنفس اليوم في أغلب الأحيان.</span></p>
+          <div class="service-area">
+            <span class="fr">📍 Zone de service : <span class="highlight">Marrakech et ses environs</span></span>
+            <span class="ar">📍 المنطقة الشاملة للخدمة : <span class="highlight">مراكش والنواحي</span></span>
+          </div>
           <ul class="service-list">
-            <li><span class="ar">تركيب وصيانة جميع أجهزة التكييف</span><span class="fr">Installation & entretien de tous les climatiseurs</span></li>
-            <li><span class="ar">صيانة جميع أنواع الثلاجات والمجمدات</span><span class="fr">Réparation de tous les réfrigérateurs</span></li>
-            <li><span class="ar">صيانة جميع أنواع غسالات الملابس</span><span class="fr">Réparation de tous les lave-linge</span></li>
-            <li><span class="ar">شحن الفريون - كشف التسريب</span><span class="fr">Recharge fréon - Détection de fuite</span></li>
-            <li><span class="ar">خدمة احترافية - أسعار مناسبة - ضمان على الخدمة</span><span class="fr">Service pro - Prix justes - Garantie</span></li>
+            <li><span class="fr">Installation & entretien de tous les climatiseurs</span><span class="ar">تركيب وصيانة جميع أجهزة التكييف</span></li>
+            <li><span class="fr">Réparation de tous les réfrigérateurs</span><span class="ar">صيانة جميع أنواع الثلاجات والمجمدات</span></li>
+            <li><span class="fr">Réparation de tous les lave-linge</span><span class="ar">صيانة جميع أنواع غسالات الملابس</span></li>
+            <li><span class="fr">Recharge fréon - Détection de fuite</span><span class="ar">شحن الفريون - كشف التسريب</span></li>
+            <li><span class="fr">Service pro - Prix justes - Garantie</span><span class="ar">خدمة احترافية - أسعار مناسبة - ضمان على الخدمة</span></li>
           </ul>
         </div>
       </div>
@@ -548,51 +642,51 @@
 <section class="why" id="why">
   <div class="wrap why-grid">
     <div class="why-photo reveal">
-      <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783274078/IMG-20260705-WA0006_zqrm4j.jpg" alt="Technician at work">
+      <img src="https://res.cloudinary.com/dyeklznvg/image/upload/v1783271899/images_jzdoyd.jpg" alt="Technician at work">
       <div class="badge-ring">
         <b>+15</b>
-        <span><span class="ar">سنة خبرة</span><span class="fr">ans d'expérience</span></span>
+        <span><span class="fr">ans d'expérience</span><span class="ar">سنة خبرة</span></span>
       </div>
     </div>
     <div>
       <span class="eyebrow">
         <span class="dot"></span>
-        <span class="ar">لماذا نحن</span><span class="fr">Pourquoi nous</span>
+        <span class="fr">Pourquoi nous</span><span class="ar">لماذا نحن</span>
       </span>
       <div class="section-head" style="margin-bottom:30px;">
-        <h2><span class="ar">ثقة يبنيها العمل، لا الوعود</span><span class="fr">Une confiance qui se construit par le travail</span></h2>
+        <h2><span class="fr">Une confiance qui se construit par le travail</span><span class="ar">ثقة يبنيها العمل، لا الوعود</span></h2>
         <p>
-          <span class="ar">نتعامل مع كل جهاز وكأنه في بيتنا: تشخيص صحيح، قطع مناسبة، وسعر واضح من البداية.</span>
           <span class="fr">Nous traitons chaque appareil comme le nôtre : diagnostic juste, pièces adaptées, prix clair dès le départ.</span>
+          <span class="ar">نتعامل مع كل جهاز وكأنه في بيتنا: تشخيص صحيح، قطع مناسبة، وسعر واضح من البداية.</span>
         </p>
       </div>
       <div class="why-list">
         <div class="why-item reveal">
           <div class="why-num">١</div>
           <div>
-            <h4><span class="ar">خبرة طويلة في المجال</span><span class="fr">Longue expérience</span></h4>
-            <p><span class="ar">سنوات من التعامل مع مختلف الماركات والأعطال، من الأبسط إلى الأكثر تعقيدًا.</span><span class="fr">Des années à traiter toutes marques et toutes pannes, des plus simples aux plus complexes.</span></p>
+            <h4><span class="fr">Longue expérience</span><span class="ar">خبرة طويلة في المجال</span></h4>
+            <p><span class="fr">Des années à traiter toutes marques et toutes pannes, des plus simples aux plus complexes.</span><span class="ar">سنوات من التعامل مع مختلف الماركات والأعطال، من الأبسط إلى الأكثر تعقيدًا.</span></p>
           </div>
         </div>
         <div class="why-item reveal">
           <div class="why-num">٢</div>
           <div>
-            <h4><span class="ar">خدمة احترافية وموثوقة</span><span class="fr">Service professionnel</span></h4>
-            <p><span class="ar">أدوات قياس دقيقة وفحص شامل قبل كل تدخل.</span><span class="fr">Outils de mesure précis et diagnostic complet avant chaque intervention.</span></p>
+            <h4><span class="fr">Service professionnel</span><span class="ar">خدمة احترافية وموثوقة</span></h4>
+            <p><span class="fr">Outils de mesure précis et diagnostic complet avant chaque intervention.</span><span class="ar">أدوات قياس دقيقة وفحص شامل قبل كل تدخل.</span></p>
           </div>
         </div>
         <div class="why-item reveal">
           <div class="why-num">٣</div>
           <div>
-            <h4><span class="ar">أسعار مناسبة وواضحة</span><span class="fr">Tarifs justes et clairs</span></h4>
-            <p><span class="ar">تسعير عادل يُحدد قبل بدء العمل، بدون مفاجآت.</span><span class="fr">Prix équitable fixé avant le début des travaux, sans surprises.</span></p>
+            <h4><span class="fr">Tarifs justes et clairs</span><span class="ar">أسعار مناسبة وواضحة</span></h4>
+            <p><span class="fr">Prix équitable fixé avant le début des travaux, sans surprises.</span><span class="ar">تسعير عادل يُحدد قبل بدء العمل، بدون مفاجآت.</span></p>
           </div>
         </div>
         <div class="why-item reveal">
           <div class="why-num">٤</div>
           <div>
-            <h4><span class="ar">ضمان حقيقي على الخدمة</span><span class="fr">Garantie réelle</span></h4>
-            <p><span class="ar">كل تدخل مضمون، ونعود إذا لزم الأمر دون أي تكلفة إضافية.</span><span class="fr">Chaque intervention est garantie, retour gratuit si nécessaire.</span></p>
+            <h4><span class="fr">Garantie réelle</span><span class="ar">ضمان حقيقي على الخدمة</span></h4>
+            <p><span class="fr">Chaque intervention est garantie, retour gratuit si nécessaire.</span><span class="ar">كل تدخل مضمون، ونعود إذا لزم الأمر دون أي تكلفة إضافية.</span></p>
           </div>
         </div>
       </div>
@@ -603,8 +697,8 @@
 <div class="cta-strip">
   <div class="wrap cta-inner">
     <div>
-      <h3><span class="ar">عطل الآن؟ لا داعي للانتظار</span><span class="fr">Une panne maintenant ?</span></h3>
-      <p><span class="ar">اتصل بنا اليوم واحصل على فني في أقرب وقت ممكن</span><span class="fr">Appelez-nous aujourd'hui pour une intervention rapide</span></p>
+      <h3><span class="fr">Une panne maintenant ?</span><span class="ar">عطل الآن؟ لا داعي للانتظار</span></h3>
+      <p><span class="fr">Appelez-nous aujourd'hui pour une intervention rapide</span><span class="ar">اتصل بنا اليوم واحصل على فني في أقرب وقت ممكن</span></p>
     </div>
     <a class="cta-call" href="tel:0690668713" dir="ltr">
       <svg width="20" height="20" viewBox="0 0 24 24" stroke="#0B2622"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -622,34 +716,46 @@
           GLACIA
         </div>
         <p>
-          <span class="ar">فني متخصص في التبريد والتكييف وصيانة غسالات الملابس. خدمتكم راحتنا، ورضاكم هدفنا.</span>
           <span class="fr">Technicien spécialisé en climatisation, réfrigération et lave-linge. Votre confort, notre engagement.</span>
+          <span class="ar">فني متخصص في التبريد والتكييف وصيانة غسالات الملابس. خدمتكم راحتنا، ورضاكم هدفنا.</span>
         </p>
       </div>
       <div>
-        <h5><span class="ar">الخدمات</span><span class="fr">Services</span></h5>
+        <h5><span class="fr">Services</span><span class="ar">الخدمات</span></h5>
         <ul>
-          <li><a href="#services"><span class="ar">تركيب وصيانة تكييف</span><span class="fr">Climatisation</span></a></li>
-          <li><a href="#services"><span class="ar">صيانة ثلاجات ومجمدات</span><span class="fr">Réfrigérateurs</span></a></li>
-          <li><a href="#services"><span class="ar">صيانة غسالات</span><span class="fr">Lave-linge</span></a></li>
-          <li><a href="#services"><span class="ar">شحن فريون وكشف تسريب</span><span class="fr">Fréon & détection de fuite</span></a></li>
+          <li><a href="#services"><span class="fr">Climatisation</span><span class="ar">تركيب وصيانة تكييف</span></a></li>
+          <li><a href="#services"><span class="fr">Réfrigérateurs</span><span class="ar">صيانة ثلاجات ومجمدات</span></a></li>
+          <li><a href="#services"><span class="fr">Lave-linge</span><span class="ar">صيانة غسالات</span></a></li>
+          <li><a href="#services"><span class="fr">Fréon & détection de fuite</span><span class="ar">شحن فريون وكشف تسريب</span></a></li>
         </ul>
       </div>
       <div>
-        <h5><span class="ar">التواصل</span><span class="fr">Contact</span></h5>
+        <h5><span class="fr">Contact</span><span class="ar">التواصل</span></h5>
         <ul>
           <li style="direction:ltr; text-align:right;"><a href="tel:0690668713" dir="ltr">0690 66 87 13</a></li>
-          <li><span class="ar">صيانة منزلية يومية</span><span class="fr">Service quotidien à domicile</span></li>
-          <li><span class="ar">خدمة سريعة وموثوقة</span><span class="fr">Rapide et fiable</span></li>
+          <li><span class="fr">Service quotidien à domicile</span><span class="ar">صيانة منزلية يومية</span></li>
+          <li><span class="fr">Rapide et fiable</span><span class="ar">خدمة سريعة وموثوقة</span></li>
         </ul>
       </div>
     </div>
     <div class="foot-bottom">
-      <span><span class="ar">© 2026 GLACIA — جميع الحقوق محفوظة</span><span class="fr">© 2026 GLACIA — Tous droits réservés</span></span>
-      <span><span class="ar">ضمان جودة على كل خدمة</span><span class="fr">Qualité garantie sur chaque service</span></span>
+      <span><span class="fr">© 2026 GLACIA — Tous droits réservés</span><span class="ar">© 2026 GLACIA — جميع الحقوق محفوظة</span></span>
+      <span><span class="fr">Qualité garantie sur chaque service</span><span class="ar">ضمان جودة على كل خدمة</span></span>
     </div>
   </div>
 </footer>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/212690668713?text=Bonjour%2C%20je%20souhaite%20avoir%20plus%20d%27informations%20sur%20vos%20services%20de%20climatisation%20et%20de%20réfrigération." 
+   class="whatsapp-float" 
+   target="_blank" 
+   rel="noopener noreferrer"
+   aria-label="Contactez-nous sur WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  <span class="tooltip"><span class="fr">WhatsApp</span><span class="ar">واتساب</span></span>
+</a>
 
 <script>
   const html = document.documentElement;
