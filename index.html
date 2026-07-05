@@ -32,7 +32,6 @@
   ul{list-style:none;}
   button{font:inherit;cursor:pointer;border:none;background:none;}
 
-  /* language toggling */
   html[lang="ar"] .fr{display:none !important;}
   html[lang="fr"] .ar{display:none !important;}
 
@@ -49,7 +48,6 @@
   html[lang="fr"] .eyebrow{font-family:'Jost',sans-serif;letter-spacing:.6px;}
   .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--brass);}
 
-  /* ===== Header ===== */
   header{
     position:fixed;top:0;right:0;left:0;z-index:200;
     background:rgba(11,38,34,0.90);
@@ -109,7 +107,6 @@
   .nav-call:hover{transform:translateY(-2px);}
   @media(max-width:900px){.navlinks{display:none;}}
 
-  /* ===== Hero ===== */
   .hero{
     position:relative;
     background:linear-gradient(180deg,var(--teal-1) 0%, var(--teal-2) 100%);
@@ -198,7 +195,6 @@
     html[dir="ltr"] .float-card{left:8px;right:auto;}
   }
 
-  /* ===== Section shared ===== */
   section{padding:100px 0;}
   .section-head{max-width:640px;margin-bottom:56px;}
   .section-head.center{margin-inline:auto;text-align:center;}
@@ -208,38 +204,92 @@
   html[lang="fr"] .section-head h2{font-weight:400;}
   .section-head p{color:var(--stone);font-size:15.5px;line-height:1.85;}
 
-  /* ===== Services ===== */
   .services{background:#fff;}
   .service-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:26px;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:30px;
   }
   .s-card{
     border-radius:18px;overflow:hidden;background:var(--ivory);
     border:1px solid var(--mist);
     transition:transform .3s, box-shadow .3s;
+    display:flex;
+    flex-direction:column;
   }
   .s-card:hover{transform:translateY(-8px);box-shadow:0 24px 50px rgba(11,38,34,0.14);}
-  .s-photo{position:relative;height:190px;overflow:hidden;}
-  .s-photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+  .s-photo{
+    position:relative;
+    height:200px;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .s-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .5s;
+  }
   .s-card:hover .s-photo img{transform:scale(1.08);}
-  .s-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg, rgba(11,38,34,0.55), transparent 55%);}
+  .s-photo::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(0deg, rgba(11,38,34,0.55), transparent 55%);
+  }
   .s-ico{
-    position:absolute;bottom:14px;left:14px;
-    width:44px;height:44px;border-radius:12px;
+    position:absolute;
+    bottom:14px;
+    left:14px;
+    width:44px;
+    height:44px;
+    border-radius:12px;
     background:var(--brass);
-    display:flex;align-items:center;justify-content:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     box-shadow:0 8px 18px rgba(0,0,0,0.25);
+    z-index:2;
   }
   html[dir="ltr"] .s-ico{left:auto;right:14px;}
   .s-ico svg{width:22px;height:22px;color:var(--teal-1);}
-  .s-body{padding:22px 24px 26px;}
-  .s-body h3{font-family:'Cairo',sans-serif;font-size:17.5px;font-weight:700;margin-bottom:9px;color:var(--teal-1);}
-  html[lang="fr"] .s-body h3{font-family:'Marcellus',serif;font-weight:400;font-size:19px;}
-  .s-body p{font-size:14px;color:var(--stone);line-height:1.8;}
+  .s-body{
+    padding:24px 24px 28px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+  }
+  .s-body h3{
+    font-family:'Cairo',sans-serif;
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:10px;
+    color:var(--teal-1);
+    line-height:1.4;
+  }
+  html[lang="fr"] .s-body h3{
+    font-family:'Marcellus',serif;
+    font-weight:400;
+    font-size:19px;
+  }
+  .s-body p{
+    font-size:14.5px;
+    color:var(--stone);
+    line-height:1.9;
+    margin-bottom:0;
+  }
+  .s-body .service-list{
+    margin-top:12px;
+    padding-right:18px;
+    list-style:disc;
+  }
+  .s-body .service-list li{
+    font-size:13.5px;
+    color:var(--stone);
+    line-height:1.8;
+    margin-bottom:4px;
+  }
   @media(max-width:860px){.service-grid{grid-template-columns:1fr 1fr;}}
   @media(max-width:560px){.service-grid{grid-template-columns:1fr;}}
 
-  /* ===== Why us ===== */
   .why{background:var(--ivory);}
   .why-grid{
     display:grid;grid-template-columns:0.95fr 1.05fr;gap:60px;align-items:center;
@@ -281,7 +331,6 @@
   .why-item p{font-size:13.5px;color:var(--stone);line-height:1.8;}
   @media(max-width:900px){.why-grid{grid-template-columns:1fr;}.why-photo{max-width:420px;margin:0 auto;}}
 
-  /* ===== CTA strip ===== */
   .cta-strip{
     position:relative;padding:0;
     background-image:linear-gradient(115deg, rgba(11,38,34,0.92), rgba(18,60,54,0.85)), url('https://images.unsplash.com/photo-1705579604902-eb832f58bf85?auto=format&fit=crop&w=1600&q=70');
@@ -306,7 +355,6 @@
   .cta-call:hover{transform:translateY(-3px);}
   @media(max-width:760px){.cta-inner{text-align:center;justify-content:center;}}
 
-  /* ===== Footer ===== */
   footer{background:#08201C;color:var(--mist);padding:60px 0 26px;}
   .foot-grid{
     display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line);
@@ -327,8 +375,6 @@
   @media(max-width:760px){.foot-grid{grid-template-columns:1fr;}}
 
   svg{stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-
-  /* fade-in on scroll */
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;}
   .reveal.in{opacity:1;transform:translateY(0);}
 </style>
@@ -486,6 +532,13 @@
         <div class="s-body">
           <h3><span class="ar">صيانة منزلية سريعة</span><span class="fr">Service à domicile rapide</span></h3>
           <p><span class="ar">نأتي إليك بنفس اليوم في أغلب الأحيان.</span><span class="fr">Intervention le jour même dans la plupart des cas.</span></p>
+          <ul class="service-list">
+            <li><span class="ar">تركيب وصيانة جميع أجهزة التكييف</span><span class="fr">Installation & entretien de tous les climatiseurs</span></li>
+            <li><span class="ar">صيانة جميع أنواع الثلاجات والمجمدات</span><span class="fr">Réparation de tous les réfrigérateurs</span></li>
+            <li><span class="ar">صيانة جميع أنواع غسالات الملابس</span><span class="fr">Réparation de tous les lave-linge</span></li>
+            <li><span class="ar">شحن الفريون - كشف التسريب</span><span class="fr">Recharge fréon - Détection de fuite</span></li>
+            <li><span class="ar">خدمة احترافية - أسعار مناسبة - ضمان على الخدمة</span><span class="fr">Service pro - Prix justes - Garantie</span></li>
+          </ul>
         </div>
       </div>
     </div>
@@ -532,7 +585,7 @@
           <div class="why-num">٣</div>
           <div>
             <h4><span class="ar">أسعار مناسبة وواضحة</span><span class="fr">Tarifs justes et clairs</span></h4>
-            <p><span class="ar">تسعير عادل يُحدد قبل بدء العمل بدون مفاجآت.</span><span class="fr">Prix équitable fixé avant le début des travaux, sans surprises.</span></p>
+            <p><span class="ar">تسعير عادل يُحدد قبل بدء العمل، بدون مفاجآت.</span><span class="fr">Prix équitable fixé avant le début des travaux, sans surprises.</span></p>
           </div>
         </div>
         <div class="why-item reveal">
@@ -599,7 +652,6 @@
 </footer>
 
 <script>
-  // language toggle
   const html = document.documentElement;
   const buttons = document.querySelectorAll('.lang-switch button');
   buttons.forEach(btn=>{
@@ -611,7 +663,6 @@
     });
   });
 
-  // scroll reveal
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
       if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
