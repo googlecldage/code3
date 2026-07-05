@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GLACIA — Climatisation & Réfrigération | تبريد وتكييف راقٍ</title>
+<title>GLACIA — Climatisation & Réfrigération</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Almarai:wght@300;400;700;800&family=Marcellus&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -369,7 +369,6 @@
   .cta-call:hover{transform:translateY(-3px);}
   @media(max-width:760px){.cta-inner{text-align:center;justify-content:center;}}
 
-  /* ===== WhatsApp Floating Button ===== */
   .whatsapp-float{
     position:fixed;
     bottom:28px;
@@ -745,7 +744,6 @@
   </div>
 </footer>
 
-<!-- WhatsApp Floating Button -->
 <a href="https://wa.me/212690668713?text=Bonjour%2C%20je%20souhaite%20avoir%20plus%20d%27informations%20sur%20vos%20services%20de%20climatisation%20et%20de%20réfrigération." 
    class="whatsapp-float" 
    target="_blank" 
@@ -760,21 +758,28 @@
 <script>
   const html = document.documentElement;
   const buttons = document.querySelectorAll('.lang-switch button');
-  buttons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const lang = btn.dataset.lang;
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var lang = btn.dataset.lang;
       html.setAttribute('lang', lang);
       html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-      buttons.forEach(b=>b.classList.toggle('active', b===btn));
+      buttons.forEach(function(b){
+        b.classList.toggle('active', b === btn);
+      });
     });
   });
 
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
     });
   }, {threshold:0.15});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  document.querySelectorAll('.reveal').forEach(function(el){
+    io.observe(el);
+  });
 </script>
 
 </body>
